@@ -14,6 +14,24 @@ window.Game = (function() {
   var WIDTH = 700;
 
   /**
+   * @const
+   * @type {number}
+   */
+  var MESSAGE_SIZE_X = 350;
+
+  /**
+   * @const
+   * @type {number}
+   */
+  var MESSAGE_SIZE_Y = 150;
+
+  /**
+   * @const
+   * @type {number}
+   */
+  var MAX_MESSAGE_WIDTH = 300;
+
+  /**
    * ID уровней.
    * @enum {number}
    */
@@ -405,21 +423,77 @@ window.Game = (function() {
     },
 
     /**
+     * Перенос строк в блоке сообщений.
+     */
+    wrapText: function(ctx, text, marginLeft, marginTop, MAX_MESSAGE_WIDTH, lineHeight) {
+      var words = text.split(" ");
+      var countWords = words.length;
+      var line = "";
+      for (var i = 0; i < countWords; i++) {
+        var newLine = line + words[i] + " ";
+        var lineWidth = ctx.measureText(newLine).width;
+        if (lineWidth > MAX_MESSAGE_WIDTH) {
+          ctx.fillText(line, marginLeft, marginTop);
+          line = words[i] + " ";
+          marginTop += lineHeight;
+        }
+        else {
+          line = newLine;
+        }
+      }
+      ctx.fillText(line, marginLeft, marginTop);
+    },
+
+    /**
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var x = WIDTH;
+      var y = HEIGHT;
+      var sizeX = MESSAGE_SIZE_X;
+      var sizeY = MESSAGE_SIZE_Y;
+
+      this.ctx.beginPath();
+      this.ctx.moveTo((x / 3) + 10, (y / 4) + 10);
+      this.ctx.lineTo((x / 3 + sizeX) + 10, (y / 4) + 10);
+      this.ctx.lineTo((x / 3 + sizeX) + 10, (y / 4 + sizeY) + 10);
+      this.ctx.lineTo((x / 3 - 15) + 10,  ((y / 4 + sizeY) + 25) + 10);
+      this.ctx.lineTo((x / 3) + 10, (y / 4) + 10);
+      this.ctx.fillStyle = '#000000';
+      this.ctx.fill();
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(x / 3, y / 4);
+      this.ctx.lineTo(x / 3 + sizeX, y / 4);
+      this.ctx.lineTo(x / 3 + sizeX, y / 4 + sizeY);
+      this.ctx.lineTo(x / 3 - 15,  (y / 4 + sizeY) + 25);
+      this.ctx.lineTo(x / 3, y / 4);
+      this.ctx.fillStyle = '#FFFFFF';
+      this.ctx.fill();
+
+      this.ctx.fillStyle = '#000000';
+      this.ctx.font = '16px PT Mono';
+
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
+          var text = 'Поздравляем! Вы только что выиграли!';
+          this.wrapText(this.ctx, text, (x / 3) + 40, (y / 3) + 20, MAX_MESSAGE_WIDTH, 25);
           break;
         case Verdict.FAIL:
           console.log('you have failed!');
+          var text = 'Сожалеем! Вы проиграли!';
+          this.wrapText(this.ctx, text, (x / 3) + 40, (y / 3) + 20, MAX_MESSAGE_WIDTH, 25);
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
+          var text = 'Игра на паузе! Для продолжения нажмите пробел!';
+          this.wrapText(this.ctx, text, (x / 3) + 40, (y / 3) + 20, MAX_MESSAGE_WIDTH, 25);
           break;
         case Verdict.INTRO:
           console.log('welcome to the game! Press Space to start');
+          var text = 'Добро пожаловать в игру! Используйте стрелки для перемещения и shift для стрельбы!';
+          this.wrapText(this.ctx, text, (x / 3) + 40, (y / 3) + 30, MAX_MESSAGE_WIDTH, 25);
           break;
       }
     },
