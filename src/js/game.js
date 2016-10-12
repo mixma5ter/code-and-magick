@@ -417,7 +417,7 @@ window.Game = (function() {
     },
 
     /**
-     * Перенос строк в блоке сообщений.
+     * Перенос строк в блоке сообщений
      */
     wrapText: function(ctx, text, marginLeft, marginTop, maxMessageWidth, lineHeight) {
       var words = text.split(' ');
