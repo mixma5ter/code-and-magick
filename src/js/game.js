@@ -457,11 +457,11 @@ window.Game = (function() {
     /**
      * Отрисовка фонового блока паузы.
      */
-    drawBaloon: function(x, y, lineHeight, baloonHeight){
+    drawBaloon: function(x, y, lineHeight, baloonHeight) {
       var offsetX = 10;
       var offsetY = 10;
       var sizeX = MESSAGE_SIZE_X;
-      var sizeY = 40 +  baloonHeight * lineHeight;
+      var sizeY = 40 + baloonHeight * lineHeight;
 
       this.ctx.beginPath();
       this.ctx.moveTo(x + offsetX, y + offsetY);
@@ -492,9 +492,9 @@ window.Game = (function() {
       var y = HEIGHT / 9;
       var lineHeight = 25;
       var maxMessageWidth = 300;
-      var marginTop =  (y * 2) + 20;
-      var marginLeft =  x + 50;
-      var marginRight =  40;
+      var marginTop = (y * 2) + 20;
+      var marginLeft = x + 50;
+      var marginRight = 40;
       var text;
 
       this.ctx.font = '16px PT Mono';
