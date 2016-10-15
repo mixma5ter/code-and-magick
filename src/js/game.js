@@ -19,8 +19,6 @@ window.Game = (function() {
    */
   var MESSAGE_SIZE_X = 350;
 
-  var lineCount = 0;
-
   /**
    * ID уровней.
    * @enum {number}
