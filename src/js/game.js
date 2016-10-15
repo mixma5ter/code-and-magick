@@ -19,11 +19,7 @@ window.Game = (function() {
    */
   var MESSAGE_SIZE_X = 350;
 
-  /**
-   * @const
-   * @type {number}
-   */
-  var MESSAGE_SIZE_Y = 150;
+  var lineCount = 0;
 
   /**
    * ID уровней.
@@ -417,16 +413,17 @@ window.Game = (function() {
     },
 
     /**
-     * Перенос строк в блоке сообщений
+     * Перенос строк в блоке сообщений.
      */
-    wrapText: function(ctx, text, marginLeft, marginTop, maxMessageWidth, lineHeight) {
+    wrapText: function(ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight) {
       var words = text.split(' ');
       var countWords = words.length;
       var line = '';
+
       for (var i = 0; i < countWords; i++) {
         var newLine = line + words[i] + ' ';
         var lineWidth = ctx.measureText(newLine).width;
-        if (lineWidth > maxMessageWidth) {
+        if (lineWidth > maxMessageWidth - marginRight) {
           ctx.fillText(line, marginLeft, marginTop);
           line = words[i] + ' ';
           marginTop += lineHeight;
@@ -438,17 +435,35 @@ window.Game = (function() {
     },
 
     /**
-     * Отрисовка экрана паузы.
+     * Подсчет количества переносов строки в блоке сообщений.
      */
-    _drawPauseScreen: function() {
-      var x = WIDTH / 4;
-      var y = HEIGHT / 9;
+    getRowsCount: function(ctx, text, marginRight, maxMessageWidth) {
+      var words = text.split(' ');
+      var countWords = words.length;
+      var rows = 1;
+      var line = '';
+
+      for (var i = 0; i < countWords; i++) {
+        var newLine = line + words[i] + ' ';
+        var lineWidth = ctx.measureText(newLine).width;
+        if (lineWidth > (maxMessageWidth - marginRight * 2)) {
+          rows++;
+          line = words[i] + ' ';
+        } else {
+          line = newLine;
+        }
+      }
+      return rows;
+    },
+
+    /**
+     * Отрисовка фонового блока паузы.
+     */
+    drawBaloon: function(x, y, lineHeight, baloonHeight){
       var offsetX = 10;
       var offsetY = 10;
       var sizeX = MESSAGE_SIZE_X;
-      var sizeY = MESSAGE_SIZE_Y;
-      var lineHeight = 25;
-      var maxMessageWidth = 300;
+      var sizeY = 40 +  baloonHeight * lineHeight;
 
       this.ctx.beginPath();
       this.ctx.moveTo(x + offsetX, y + offsetY);
@@ -469,24 +484,43 @@ window.Game = (function() {
       this.ctx.fill();
 
       this.ctx.fillStyle = '#000000';
+    },
+
+    /**
+     * Отрисовка экрана паузы.
+     */
+    _drawPauseScreen: function() {
+      var x = WIDTH / 4;
+      var y = HEIGHT / 9;
+      var lineHeight = 25;
+      var maxMessageWidth = 300;
+      var marginTop =  (y * 2) + 20;
+      var marginLeft =  x + 50;
+      var marginRight =  40;
+      var text;
+
       this.ctx.font = '16px PT Mono';
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          var text = 'Поздравляем! Вы только что выиграли!';
-          this.wrapText(this.ctx, text, x + 40, (y * 2) + 30, maxMessageWidth, lineHeight);
+          text = 'Поздравляем! Вы только что выиграли!';
+          this.drawBaloon(x, y, lineHeight, this.getRowsCount(this.ctx, text, marginRight, maxMessageWidth));
+          this.wrapText(this.ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight);
           break;
         case Verdict.FAIL:
           text = 'Сожалеем! Вы проиграли!';
-          this.wrapText(this.ctx, text, x + 40, (y * 2) + 30, maxMessageWidth, lineHeight);
+          this.drawBaloon(x, y, lineHeight, this.getRowsCount(this.ctx, text, marginRight, maxMessageWidth));
+          this.wrapText(this.ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight);
           break;
         case Verdict.PAUSE:
           text = 'Игра на паузе! Для продолжения нажмите пробел!';
-          this.wrapText(this.ctx, text, x + 40, (y * 2) + 30, maxMessageWidth, lineHeight);
+          this.drawBaloon(x, y, lineHeight, this.getRowsCount(this.ctx, text, marginRight, maxMessageWidth));
+          this.wrapText(this.ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight);
           break;
         case Verdict.INTRO:
           text = 'Добро пожаловать в игру! Используйте стрелки для перемещения и shift для стрельбы!';
-          this.wrapText(this.ctx, text, x + 40, (y * 2) + 20, maxMessageWidth, lineHeight);
+          this.drawBaloon(x, y, lineHeight, this.getRowsCount(this.ctx, text, marginRight, maxMessageWidth));
+          this.wrapText(this.ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight);
           break;
       }
     },
