@@ -31,7 +31,7 @@ window.form = (function() {
       reviewSubmitBtn.disabled = true;
       reviewLinkContainer.classList.add('review-fields-visible');
       reviewTextLink.classList.add('review-fields-label-visible');
-    } else if(reviewMark.value >= 3){
+    } else if(reviewMark.value >= 3) {
       reviewTextField.required = false;
       reviewSubmitBtn.disabled = false;
       reviewTextLink.classList.remove('review-fields-label-visible');
@@ -39,7 +39,7 @@ window.form = (function() {
   }
 
   function formTextValidation() {
-    if(!reviewTextField.value & (reviewTextField.required == true)) {
+    if(!reviewTextField.value & (reviewTextField.required === true)) {
       reviewSubmitBtn.disabled = true;
       reviewTextLink.classList.add('review-fields-visible');
       reviewTextLink.classList.add('review-fields-label-visible');
@@ -77,19 +77,28 @@ window.form = (function() {
     }
   };
 
-  reviewAddBtn.addEventListener('click', function(){
+  reviewAddBtn.addEventListener('click', function() {
     formMarkValidation();
     formNameValidation();
     formTextValidation();
   });
 
-  for(var i = 0; i < reviewMarkAll.length; i++){
-    reviewMarkAll[i].onchange = function(){formMarkValidation(), formLinkValidation()};
+  for(var i = 0; i < reviewMarkAll.length; i++) {
+    reviewMarkAll[i].onchange = function() {
+      formMarkValidation();
+      formLinkValidation();
+    };
   }
 
-  reviewNameField.oninput = function(){formNameValidation(), formLinkValidation()};
+  reviewNameField.oninput = function() {
+    formNameValidation();
+    formLinkValidation();
+  };
 
-  reviewTextField.oninput = function(){formTextValidation(), formLinkValidation()};
+  reviewTextField.oninput = function() {
+    formTextValidation();
+    formLinkValidation();
+  };
 
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
