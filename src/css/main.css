@@ -505,16 +505,26 @@ input[type=radio]:checked + .review-mark-label {
 }
 
 .review-fields {
+  display: none;
   font-size: 16px;
   color: #ffffff;
   color: rgba(255, 255, 255, 0.6);
   white-space: normal;
 }
 
+.review-fields-visible {
+  display: inline-block;
+}
+
 .review-fields-label {
+  display: none;
   text-decoration: underline;
 
   cursor: pointer;
+}
+
+.review-fields-label-visible {
+  display: inline;
 }
 
 .footer-link {
