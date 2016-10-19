@@ -79,7 +79,26 @@ window.form = (function() {
     }
   };
 
+  function getCookie(cookieName) {
+    var matches = document.cookie.match('(^|;) ?' + cookieName + '=([^;]*)(;|$)');
+
+    if (matches) {
+      return matches[2];
+    } else {
+      return null;
+    }
+  }
+
   reviewAddBtn.addEventListener('click', function() {
+    var reviewMarkCookie = getCookie('review-mark');
+
+    for(var i = 0; i < reviewMarkAll.length; i++) {
+      if (reviewMarkAll[i].value === reviewMarkCookie) {
+        reviewMarkAll[i].checked = true;
+      }
+    }
+
+    reviewNameField.value = getCookie('review-name');
     formValidation();
   });
 
@@ -96,6 +115,29 @@ window.form = (function() {
   reviewTextField.oninput = function() {
     formValidation();
   };
+
+  function setCookie() {
+    var dateNow = new Date();
+    var yearNow = dateNow.getFullYear();
+    var lastBirthDate = new Date(yearNow, 11, 9);
+    var birthDateDaysLeft = +dateNow - +lastBirthDate;
+    var reviewMark = document.querySelector('input[name=review-mark]:checked');
+
+    if(+dateNow > +lastBirthDate) {
+      var dateToExpire = +dateNow + +birthDateDaysLeft;
+    } else {
+      dateToExpire = +dateNow + (+dateNow - (+new Date(yearNow - 1, 11, 9)));
+    }
+
+    var formattedDateToExpire = new Date(dateToExpire).toUTCString();
+
+    document.cookie = 'review-mark=' + reviewMark.value + '; path=/; expires=' + formattedDateToExpire;
+    document.cookie = 'review-name=' + reviewNameField.value + '; path=/; expires=' + formattedDateToExpire;
+  }
+
+  reviewSubmitBtn.addEventListener('click', function() {
+    setCookie();
+  });
 
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
