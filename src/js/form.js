@@ -59,51 +59,6 @@ window.form = (function() {
     }());
   }
 
-  //function formNameValidation() {
-  //  if(!reviewNameField.value) {
-  //    reviewSubmitBtn.disabled = true;
-  //    reviewLinkContainer.classList.add('review-fields-visible');
-  //    reviewNameLink.classList.add('review-fields-label-visible');
-  //  } else {
-  //    reviewSubmitBtn.disabled = false;
-  //    reviewNameLink.classList.remove('review-fields-label-visible');
-  //  }
-  //}
-
-  //function formMarkValidation() {
-  //  var reviewMark = document.querySelector('input[name=review-mark]:checked');
-  //
-  //  if(reviewMark.value < 3) {
-  //    reviewTextField.required = true;
-  //    reviewSubmitBtn.disabled = true;
-  //    reviewLinkContainer.classList.add('review-fields-visible');
-  //    reviewTextLink.classList.add('review-fields-label-visible');
-  //  } else if(reviewMark.value >= 3) {
-  //    reviewTextField.required = false;
-  //    reviewSubmitBtn.disabled = false;
-  //    reviewTextLink.classList.remove('review-fields-label-visible');
-  //  }
-  //}
-
-  //function formTextValidation() {
-  //  if(!reviewTextField.value & (reviewTextField.required === true)) {
-  //    reviewSubmitBtn.disabled = true;
-  //    reviewTextLink.classList.add('review-fields-visible');
-  //    reviewTextLink.classList.add('review-fields-label-visible');
-  //  } else {
-  //    reviewSubmitBtn.disabled = false;
-  //    reviewTextLink.classList.remove('review-fields-label-visible');
-  //  }
-  //}
-
-  //function formLinkValidation() {
-  //  if(!reviewNameLink.classList.contains('review-fields-label-visible') & !reviewTextLink.classList.contains('review-fields-label-visible')) {
-  //    reviewLinkContainer.classList.remove('review-fields-visible');
-  //  } else {
-  //    reviewLinkContainer.classList.add('review-fields-visible');
-  //  }
-  //}
-
   var form = {
     onClose: null,
 
@@ -126,33 +81,20 @@ window.form = (function() {
 
   reviewAddBtn.addEventListener('click', function() {
     formValidation();
-
-    //formMarkValidation();
-    //formNameValidation();
-    //formTextValidation();
   });
 
   for(var i = 0; i < reviewMarkAll.length; i++) {
     reviewMarkAll[i].onchange = function() {
       formValidation();
-
-      //formMarkValidation();
-      //formLinkValidation();
     };
   }
 
   reviewNameField.oninput = function() {
     formValidation();
-
-    //formNameValidation();
-    //formLinkValidation();
   };
 
   reviewTextField.oninput = function() {
     formValidation();
-
-    //formTextValidation();
-    //formLinkValidation();
   };
 
   formCloseButton.onclick = function(evt) {
