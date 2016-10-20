@@ -88,7 +88,7 @@ window.form = (function() {
       }
     }
 
-    reviewNameField.value = window.Cookies.get('review-name');
+    reviewNameField.value = window.Cookies.get('review-name') || '';
 
     formValidation();
   });
