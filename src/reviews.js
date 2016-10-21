@@ -166,7 +166,7 @@
     reviewAuthorImg.onload = function() {
       clearTimeout(reviewLoadTimeout);
       reviewElement.querySelector('img').src = data.author.picture;
-      reviewElement.querySelector('img').alt = data.author.name;
+      reviewElement.querySelector('.review-author').title = data.author.name;
       reviewElement.querySelector('.review-rating').textContent = data.rating;
       reviewElement.querySelector('.review-text').textContent = data.description;
     };
