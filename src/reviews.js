@@ -165,14 +165,14 @@
 
     reviewAuthorImg.onload = function() {
       clearTimeout(reviewLoadTimeout);
-      reviewElement.querySelector('img').src = data.picture;
+      reviewElement.querySelector('img').src = data.author.picture;
     };
 
     reviewAuthorImg.onerror = function() {
       reviewElement.classList.add('review-load-failure');
     };
 
-    reviewAuthorImg.src = data.picture;
+    reviewAuthorImg.src = data.author.picture;
 
     reviewLoadTimeout = setTimeout(function() {
       reviewAuthorImg.src = '';
@@ -187,5 +187,4 @@
   });
 
   reviewsForm.classList.remove('invisible');
-
 })();
