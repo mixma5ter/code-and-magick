@@ -1,5 +1,8 @@
 'use strict';
 
+require('./game');
+require('../form/form');
+
 var game = new window.Game(document.querySelector('.demo'));
 game.initializeLevelAndStart();
 game.setGameStatus(window.Game.Verdict.INTRO);

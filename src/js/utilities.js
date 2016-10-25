@@ -1,6 +1,20 @@
 'use strict';
 
 module.exports = {
+  JSONP: function callbackLoad(url, callback, callbackName) {
+    if (!callbackName) {
+      callbackName = 'cb' + String(Math.random()).slice(-6);
+    }
+
+    window[callbackName] = function(data) {
+      callback(data);
+    }
+
+    var callbackScript = document.createElement('script');
+    callbackScript.src = url + '?callback=' + callbackName;
+    document.body.appendChild(callbackScript);
+  },
+
   setCookie: function setCookie() {
     var dateNow = new Date();
     var yearNow = dateNow.getFullYear();
@@ -22,4 +36,4 @@ module.exports = {
       expires: dateToExpire
     });
   }
-};
+}
