@@ -1,6 +1,8 @@
 'use strict';
 
+
 window.form = (function() {
+  var setCookie = require('./cookie');
   var formContainer = document.querySelector('.overlay-container');
   var formCloseButton = document.querySelector('.review-form-close');
   var reviewNameField = document.querySelector('#review-name');
@@ -107,29 +109,29 @@ window.form = (function() {
     formValidation();
   };
 
-  function setCookie() {
-    var dateNow = new Date();
-    var yearNow = dateNow.getFullYear();
-    var lastBirthDate = new Date(yearNow, 11, 9);
-    var reviewMark = document.querySelector('input[name=review-mark]:checked');
-
-    if(+dateNow > +lastBirthDate) {
-      var dateToExpire = +dateNow + (+dateNow - +lastBirthDate);
-    } else {
-      dateToExpire = +dateNow + (+dateNow - (+new Date(yearNow - 1, 11, 9)));
-    }
-
-    window.Cookies.set('review-mark', reviewMark.value, {
-      expires: dateToExpire
-    });
-
-    window.Cookies.set('review-name', reviewNameField.value, {
-      expires: dateToExpire
-    });
-  }
+  //function setCookie() {
+  //  var dateNow = new Date();
+  //  var yearNow = dateNow.getFullYear();
+  //  var lastBirthDate = new Date(yearNow, 11, 9);
+  //  var reviewMark = document.querySelector('input[name=review-mark]:checked');
+  //
+  //  if(+dateNow > +lastBirthDate) {
+  //    var dateToExpire = +dateNow + (+dateNow - +lastBirthDate);
+  //  } else {
+  //    dateToExpire = +dateNow + (+dateNow - (+new Date(yearNow - 1, 11, 9)));
+  //  }
+  //
+  //  window.Cookies.set('review-mark', reviewMark.value, {
+  //    expires: dateToExpire
+  //  });
+  //
+  //  window.Cookies.set('review-name', reviewNameField.value, {
+  //    expires: dateToExpire
+  //  });
+  //}
 
   reviewSubmitBtn.addEventListener('click', function() {
-    setCookie();
+    setCookie;
   });
 
   formCloseButton.onclick = function(evt) {
