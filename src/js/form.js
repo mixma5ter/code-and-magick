@@ -1,8 +1,6 @@
 'use strict';
 
-
 window.form = (function() {
-  var setCookie = require('./cookie');
   var formContainer = document.querySelector('.overlay-container');
   var formCloseButton = document.querySelector('.review-form-close');
   var reviewNameField = document.querySelector('#review-name');
@@ -130,8 +128,11 @@ window.form = (function() {
   //  });
   //}
 
+
   reviewSubmitBtn.addEventListener('click', function() {
-    setCookie;
+    var cookie = require('./cookie');
+    cookie.setCookie();
+    //setCookie();
   });
 
   formCloseButton.onclick = function(evt) {

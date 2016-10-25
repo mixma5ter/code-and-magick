@@ -1,6 +1,5 @@
 'use strict';
 
-(function() {
   var reviews = [];
 
   var REWIES_LOAD_URL = 'http://localhost:1507/api/reviews';
@@ -74,4 +73,3 @@
   callbackLoad(REWIES_LOAD_URL, renderReviews);
 
   reviewsForm.classList.remove('invisible');
-})();
