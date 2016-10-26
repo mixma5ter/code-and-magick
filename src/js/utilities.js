@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = {
-  JSONP: function callbackLoad(url, callback, callbackName) {
+  load: function callbackLoad(url, callback, callbackName) {
     if (!callbackName) {
       callbackName = 'cb' + String(Math.random()).slice(-6);
     }
 
     window[callbackName] = function(data) {
       callback(data);
-    }
+    };
 
     var callbackScript = document.createElement('script');
     callbackScript.src = url + '?callback=' + callbackName;
@@ -36,4 +36,4 @@ module.exports = {
       expires: dateToExpire
     });
   }
-}
+};
