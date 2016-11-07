@@ -55,3 +55,11 @@ moreReviewsBtn.addEventListener('click', function() {
   reviewBlockNumber = reviewBlockNumber + REVIEWS_BLOCK;
   loadReviews(currentFilter, reviewBlockNumber);
 });
+
+var reviews = {
+  load: function() {
+    loadReviews(currentFilter, reviewBlockNumber);
+  }
+};
+
+module.exports = reviews;

@@ -3,11 +3,11 @@
 module.exports = {
   load: function callbackLoad(url, params, callback) {
     var xhr = new XMLHttpRequest();
-    //var loadedData = [];
+    var loadedData = [];
 
     xhr.addEventListener('load', function(evt) {
       try {
-        var loadedData = JSON.parse(evt.target.response);
+        loadedData = JSON.parse(evt.target.response);
         callback(loadedData);
       } catch(err) {
         console.log(err);
