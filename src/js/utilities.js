@@ -1,18 +1,22 @@
 'use strict';
 
 module.exports = {
-  load: function callbackLoad(url, callback, callbackName) {
-    if (!callbackName) {
-      callbackName = 'cb' + String(Math.random()).slice(-6);
-    }
+  load: function callbackLoad(url, params, callback) {
+    var xhr = new XMLHttpRequest();
+    var loadedData = [];
 
-    window[callbackName] = function(data) {
-      callback(data);
-    };
+    xhr.addEventListener('load', function(evt) {
+      try {
+        loadedData = JSON.parse(evt.target.response);
+        callback(loadedData);
+      } catch(err) {
+        console.log(err);
+      }
+    });
 
-    var callbackScript = document.createElement('script');
-    callbackScript.src = url + '?callback=' + callbackName;
-    document.body.appendChild(callbackScript);
+    xhr.open('GET', url + '?' + 'from=' + params.from + '&to=' + params.to + '&filter=' + params.filter);
+    xhr.timeout = 10000;
+    xhr.send();
   },
 
   setCookie: function setCookie() {

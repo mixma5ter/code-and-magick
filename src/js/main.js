@@ -1,7 +1,8 @@
 'use strict';
 
 require('./game/game-start');
-require('./reviews/reviews');
+
+var reviews = require('./reviews/reviews');
 
 var Gallery = require('./gallery');
 
@@ -19,3 +20,5 @@ Array.prototype.forEach.call(pictures, function(picture, pictureNum) {
     gallery.show(pictureNum);
   };
 });
+
+reviews.load();

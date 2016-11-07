@@ -6,6 +6,8 @@ module.exports = {
 
     var templateElement = document.querySelector('#review-template');
 
+    var ratingClasses = ['one', 'two', 'three', 'four', 'five'];
+
     if ('content' in templateElement) {
       var elementToClone = templateElement.content.querySelector('.review');
     } else {
@@ -23,7 +25,7 @@ module.exports = {
       clearTimeout(reviewLoadTimeout);
       reviewElement.querySelector('img').src = data.author.picture;
       reviewElement.querySelector('.review-author').title = data.author.name;
-      reviewElement.querySelector('.review-rating').textContent = data.rating;
+      reviewElement.querySelector('.review-rating').classList.add('review-rating-' + ratingClasses[data.rating - 1]);
       reviewElement.querySelector('.review-text').textContent = data.description;
     };
 
