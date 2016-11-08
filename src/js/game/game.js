@@ -793,7 +793,7 @@ window.Game = (function() {
      * Эффект параллакса облаков
      * и приостановка игры при скролле страницы
      */
-    _parallaxEffectAndGamePause: function () {
+    _parallaxEffectAndGamePause: function() {
       var clouds = document.querySelector('.header-clouds');
       var demo = document.querySelector('.demo');
       var self = this;
