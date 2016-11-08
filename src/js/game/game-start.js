@@ -1,11 +1,11 @@
 'use strict';
 
-require('./game');
-require('../form/form');
+var Game = require('./game');
+var form = require('../form/form');
 
-var game = new window.Game(document.querySelector('.demo'));
+var game = new Game(document.querySelector('.demo'));
 game.initializeLevelAndStart();
-game.setGameStatus(window.Game.Verdict.INTRO);
+game.setGameStatus(Game.Verdict.INTRO);
 
 var formOpenButton = document.querySelector('.reviews-controls-new');
 
@@ -13,13 +13,13 @@ var formOpenButton = document.querySelector('.reviews-controls-new');
 formOpenButton.onclick = function(evt) {
   evt.preventDefault();
 
-  window.form.open(function() {
-    game.setGameStatus(window.Game.Verdict.PAUSE);
+  form.open(function() {
+    game.setGameStatus(Game.Verdict.PAUSE);
     game.setDeactivated(true);
   });
 };
 
-window.form.onClose = function() {
+form.onClose = function() {
   game.setDeactivated(false);
 };
 

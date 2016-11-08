@@ -39,5 +39,20 @@ module.exports = {
     window.Cookies.set('review-name', reviewNameField.value, {
       expires: dateToExpire
     });
+  },
+
+  throttle: function throttle(func, delay) {
+    var isThrottled = true;
+
+    function funcWrapper() {
+      if (isThrottled) {
+        func();
+        isThrottled = false;
+      }
+      setTimeout(function() {
+        isThrottled = true;
+      }, delay);
+    }
+    return funcWrapper;
   }
 };
