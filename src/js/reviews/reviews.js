@@ -2,7 +2,7 @@
 
 var getReviewElement = require('./review-element');
 var Review = require('./review');
-var callbackLoad = require('../utilities');
+var utilities = require('../utilities');
 
 var REVIEWS_BLOCK = 3;
 
@@ -19,7 +19,7 @@ var currentFilter = 'reviews-all';
 var reviewBlockNumber = 0;
 
 var loadReviews = function(filterID, blockNumber) {
-  callbackLoad.load(REWIES_LOAD_URL, {
+  utilities.callbackLoad(REWIES_LOAD_URL, {
     from: blockNumber,
     to: blockNumber + REVIEWS_BLOCK,
     filter: filterID

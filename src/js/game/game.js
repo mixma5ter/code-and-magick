@@ -1,6 +1,6 @@
 'use strict';
 
-var throttle = require('../utilities');
+var utilities = require('../utilities');
 
 /**
  * @const
@@ -802,7 +802,7 @@ Game.prototype = {
     var cloudsPos = 0;
 
     /** Оптимизированная проверка видимости облаков и приостановка игры*/
-    var cloudsVisibility = throttle.throttle(function() {
+    var cloudsVisibility = utilities.throttle(function() {
       var demoPos = demo.getBoundingClientRect().bottom;
       parallax = cloudsPos > 0;
       if (demoPos <= 0) {

@@ -11,7 +11,7 @@ var Review = function(element, data) {
 
   for (var i = 0; i < this.quizAnswer.length; i++) {
     this.quizAnswer[i].onclick = function() {
-      for (i = 0; i < this.quizAnswer.length; i++) {
+      for (i = 0; i < self.quizAnswer.length; i++) {
         self.quizAnswer[i].classList.remove(CLASS_ACTIVE);
       }
       this.classList.add(CLASS_ACTIVE);

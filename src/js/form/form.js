@@ -1,5 +1,7 @@
 'use strict';
 
+var utilities = require('../utilities');
+
 var formContainer = document.querySelector('.overlay-container');
 var formCloseButton = document.querySelector('.review-form-close');
 var reviewNameField = document.querySelector('#review-name');
@@ -107,8 +109,7 @@ reviewTextField.oninput = function() {
 };
 
 reviewSubmitBtn.addEventListener('click', function() {
-  var cookie = require('../utilities');
-  cookie.setCookie();
+  utilities.setCookie();
 });
 
 formCloseButton.onclick = function(evt) {
