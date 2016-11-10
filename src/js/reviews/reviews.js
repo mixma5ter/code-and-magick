@@ -66,8 +66,8 @@ var reviews = {
       currentFilter = lastCheckedFilter;
       document.getElementById(lastCheckedFilter).checked = true;
     } else {
-      currentFilter =  defaultFilter;
-    };
+      currentFilter = defaultFilter;
+    }
     loadReviews(currentFilter, reviewBlockNumber);
   }
 };
