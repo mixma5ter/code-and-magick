@@ -2,7 +2,7 @@
 
 var getReviewElement = require('./review-element');
 var Review = require('./review');
-var callbackLoad = require('../utilities');
+var utilities = require('../utilities');
 
 var REVIEWS_BLOCK = 3;
 
@@ -14,12 +14,13 @@ var moreReviewsBtn = document.querySelector('.reviews-controls-more');
 var reviewsFilter = document.querySelector('.reviews-filter');
 var reviewsContainer = document.querySelector('.reviews-list');
 
-var currentFilter = 'reviews-all';
+var defaultFilter = 'reviews-all';
+var currentFilter = defaultFilter;
 
 var reviewBlockNumber = 0;
 
 var loadReviews = function(filterID, blockNumber) {
-  callbackLoad.load(REWIES_LOAD_URL, {
+  utilities.callbackLoad(REWIES_LOAD_URL, {
     from: blockNumber,
     to: blockNumber + REVIEWS_BLOCK,
     filter: filterID
@@ -47,6 +48,7 @@ reviewsFilter.addEventListener('change', function(evt) {
     reviewsContainer.innerHTML = '';
     reviewBlockNumber = 0;
     currentFilter = evt.target.id;
+    localStorage.setItem('lastCheckedFilter', currentFilter);
     loadReviews(currentFilter, reviewBlockNumber);
   }
 });
@@ -58,6 +60,14 @@ moreReviewsBtn.addEventListener('click', function() {
 
 var reviews = {
   load: function() {
+    var lastCheckedFilter = localStorage.getItem('lastCheckedFilter');
+
+    if(lastCheckedFilter) {
+      currentFilter = lastCheckedFilter;
+      document.getElementById(lastCheckedFilter).checked = true;
+    } else {
+      currentFilter = defaultFilter;
+    }
     loadReviews(currentFilter, reviewBlockNumber);
   }
 };

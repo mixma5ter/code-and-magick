@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  load: function callbackLoad(url, params, callback) {
+  callbackLoad: function callbackLoad(url, params, callback) {
     var xhr = new XMLHttpRequest();
     var loadedData = [];
 
