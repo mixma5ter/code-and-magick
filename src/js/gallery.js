@@ -12,47 +12,49 @@ var Gallery = function(picturesList) {
   this.totalPictures = document.querySelector('.preview-number-total');
   this.galleryClose = document.querySelector('.overlay-gallery-close');
   this.totalPictures.innerText = this.pictures.length;
+
+  this.hide = this.hide.bind(this);
+  this.onLeftClick = this.onLeftClick.bind(this);
+  this.onRightClick = this.onRightClick.bind(this);
 };
 
 Gallery.prototype = {
-  show: function(pictureNum) {
-    var self = this;
+  onLeftClick: function() {
+    if (this.activePicture > 0) {
+      this.activePicture--;
+      this.setActivePicture();
+    }
+  },
 
+  onRightClick: function() {
+    if (this.activePicture < this.pictures.length - 1) {
+      this.activePicture++;
+      this.setActivePicture();
+    }
+  },
+
+  show: function(pictureNum) {
+    this.activePicture = pictureNum;
     this.galleryContainer.classList.remove(CLASS_INVISIBLE);
 
-    this.galleryClose.onclick = function() {
-      self.hide();
-    };
-    this.controlLeft.onclick = function() {
-      if (pictureNum > 0) {
-        pictureNum--;
-        self.setActivePicture(pictureNum);
-      }
-    };
-    this.controlRight.onclick = function() {
-      if (pictureNum < self.pictures.length - 1) {
-        pictureNum++;
-        self.setActivePicture(pictureNum);
-      }
-    };
+    this.galleryClose.addEventListener('click', this.hide);
+    this.controlLeft.addEventListener('click', this.onLeftClick);
+    this.controlRight.addEventListener('click', this.onRightClick);
 
-    this.setActivePicture(pictureNum);
+    this.setActivePicture();
   },
-
   hide: function() {
     this.galleryContainer.classList.add(CLASS_INVISIBLE);
-    this.galleryClose.onclick = null;
-    this.controlLeft.onclick = null;
-    this.controlRight.onclick = null;
+    this.galleryClose.removeEventListener('click', this.hide);
+    this.controlLeft.removeEventListener('click', this.onLeftClick);
+    this.controlRight.removeEventListener('click', this.onRightClick);
   },
 
-  setActivePicture: function(pictureNum) {
+  setActivePicture: function() {
     var galleryPreview = document.querySelector('.overlay-gallery-preview');
 
-    this.activePicture = pictureNum;
-
     var image = new Image();
-    image.src = this.pictures[pictureNum];
+    image.src = this.pictures[this.activePicture];
 
     if (galleryPreview.lastElementChild.nodeName === 'IMG') {
       galleryPreview.replaceChild(image, galleryPreview.lastElementChild);
