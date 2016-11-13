@@ -1,6 +1,5 @@
 'use strict';
 
-var getReviewElement = require('./review-element');
 var Review = require('./review');
 var utilities = require('../utilities');
 
@@ -10,6 +9,8 @@ var CLASS_INVISIBLE = 'invisible';
 
 var REWIES_LOAD_URL = 'http://localhost:1507/api/reviews';
 
+var template = document.getElementById('review-template');
+var templateContainer = 'content' in template ? template.content : template;
 var moreReviewsBtn = document.querySelector('.reviews-controls-more');
 var reviewsFilter = document.querySelector('.reviews-filter');
 var reviewsContainer = document.querySelector('.reviews-list');
@@ -17,6 +18,7 @@ var reviewsContainer = document.querySelector('.reviews-list');
 var defaultFilter = 'reviews-all';
 var currentFilter = defaultFilter;
 
+var reviewBlockArray = [];
 var reviewBlockNumber = 0;
 
 var loadReviews = function(filterID, blockNumber) {
@@ -31,7 +33,10 @@ var renderReviews = function(reviews) {
   reviewsFilter.classList.add(CLASS_INVISIBLE);
 
   reviews.forEach(function(data) {
-    return new Review(getReviewElement.getReviewElement(data, reviewsContainer), data);
+    var cloneElem = templateContainer.querySelector('.review').cloneNode(true);
+    var reviewItem = new Review(cloneElem, data).element;
+    reviewBlockArray.push(reviewItem);
+    reviewsContainer.appendChild(reviewItem);
   });
 
   reviewsFilter.classList.remove(CLASS_INVISIBLE);
@@ -45,7 +50,10 @@ var renderReviews = function(reviews) {
 
 reviewsFilter.addEventListener('change', function(evt) {
   if (evt.target.name === 'reviews') {
-    reviewsContainer.innerHTML = '';
+    reviewBlockArray.forEach(function(item) {
+      item.remove();
+    });
+    reviewBlockArray = [];
     reviewBlockNumber = 0;
     currentFilter = evt.target.id;
     localStorage.setItem('lastCheckedFilter', currentFilter);

@@ -1,22 +1,28 @@
 'use strict';
 
+var BaseDOMComponent = require('./base-component');
+var utilities = require('./utilities');
+
 var CLASS_INVISIBLE = 'invisible';
 
-var Gallery = function(picturesList) {
-  this.pictures = picturesList;
-  this.activePicture = 0;
-  this.galleryContainer = document.querySelector('.overlay-gallery');
+var Gallery = function(container, picturesList) {
+  BaseDOMComponent.call(this, container);
   this.controlLeft = document.querySelector('.overlay-gallery-control-left');
   this.controlRight = document.querySelector('.overlay-gallery-control-right');
   this.currentPicture = document.querySelector('.preview-number-current');
   this.totalPictures = document.querySelector('.preview-number-total');
   this.galleryClose = document.querySelector('.overlay-gallery-close');
+
+  this.pictures = picturesList;
+  this.activePicture = 0;
   this.totalPictures.innerText = this.pictures.length;
 
   this.hide = this.hide.bind(this);
   this.onLeftClick = this.onLeftClick.bind(this);
   this.onRightClick = this.onRightClick.bind(this);
 };
+
+utilities.inherit(Gallery, BaseDOMComponent);
 
 Gallery.prototype = {
   onLeftClick: function() {
@@ -35,7 +41,7 @@ Gallery.prototype = {
 
   show: function(pictureNum) {
     this.activePicture = pictureNum;
-    this.galleryContainer.classList.remove(CLASS_INVISIBLE);
+    this.element.classList.remove(CLASS_INVISIBLE);
 
     this.galleryClose.addEventListener('click', this.hide);
     this.controlLeft.addEventListener('click', this.onLeftClick);
@@ -44,7 +50,7 @@ Gallery.prototype = {
     this.setActivePicture();
   },
   hide: function() {
-    this.galleryContainer.classList.add(CLASS_INVISIBLE);
+    this.element.classList.add(CLASS_INVISIBLE);
     this.galleryClose.removeEventListener('click', this.hide);
     this.controlLeft.removeEventListener('click', this.onLeftClick);
     this.controlRight.removeEventListener('click', this.onRightClick);
