@@ -2,6 +2,7 @@
 
 var Review = require('./review');
 var utilities = require('../utilities');
+var ReviewData = require('./review-data');
 
 var REVIEWS_BLOCK = 3;
 
@@ -34,9 +35,9 @@ var renderReviews = function(reviews) {
 
   reviews.forEach(function(data) {
     var cloneElem = templateContainer.querySelector('.review').cloneNode(true);
-    var reviewItem = new Review(cloneElem, data).element;
+    var reviewItem = new Review(cloneElem, new ReviewData(data));
     reviewBlockArray.push(reviewItem);
-    reviewsContainer.appendChild(reviewItem);
+    reviewsContainer.appendChild(reviewItem.element);
   });
 
   reviewsFilter.classList.remove(CLASS_INVISIBLE);
