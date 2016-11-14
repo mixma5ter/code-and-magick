@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  callbackLoad: function callbackLoad(url, params, callback) {
+  callbackLoad: function(url, params, callback) {
     var xhr = new XMLHttpRequest();
     var loadedData = [];
 
@@ -19,7 +19,7 @@ module.exports = {
     xhr.send();
   },
 
-  setCookie: function setCookie() {
+  setCookie: function() {
     var dateNow = new Date();
     var yearNow = dateNow.getFullYear();
     var lastBirthDate = new Date(yearNow, 11, 9);
@@ -41,7 +41,7 @@ module.exports = {
     });
   },
 
-  throttle: function throttle(func, delay) {
+  throttle: function(func, delay) {
     var isThrottled = true;
 
     function funcWrapper() {
@@ -54,5 +54,15 @@ module.exports = {
       }, delay);
     }
     return funcWrapper;
+  },
+
+  inherit: function(ChildClass, ParentClass) {
+    if (typeof ChildClass === 'function' && typeof ParentClass === 'function') {
+      var EmptyConstructor = function() {};
+      EmptyConstructor.prototype = ParentClass.prototype;
+      ChildClass.prototype = new EmptyConstructor();
+    } else {
+      console.error('inherit: One or both parameters is not a function');
+    }
   }
 };
