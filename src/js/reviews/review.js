@@ -48,9 +48,9 @@ Review.prototype = {
       reviewElement.classList.add('review-load-failure');
     };
 
-    reviewAuthorImg.src = this.data.author.picture;
-    reviewText.textContent = this.data.description;
-    reviewElement.querySelector('.review-rating').classList.add('review-rating-' + ratingClasses[this.data.rating - 1]);
+    reviewAuthorImg.src = this.data.getAuthorPicture();
+    reviewText.textContent = this.data.getDescription();
+    reviewElement.querySelector('.review-rating').classList.add('review-rating-' + ratingClasses[this.data.getRating() - 1]);
 
     return reviewElement;
   }
