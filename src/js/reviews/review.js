@@ -8,29 +8,36 @@ var CLASS_ACTIVE = 'review-quiz-answer-active';
 var Review = function(element, data) {
   this.data = data;
   BaseDOMComponent.call(this, this.getReviewElement(element));
-  this.onAnswerClick = this.onAnswerClick.bind(this);
+  this.setUsefulnessOnClick = this.setUsefulnessOnClick.bind(this);
   this.quizList = this.element.querySelector('.review-quiz');
-  this.quizAnswer = this.element.querySelectorAll('.review-quiz-answer');
+  this.quizAnswerYes = this.element.querySelector('.review-quiz-answer-yes');
+  this.quizAnswerNo = this.element.querySelector('.review-quiz-answer-no');
 
-  for (var i = 0; i < this.quizAnswer.length; i++) {
-    this.quizAnswer[i].addEventListener('click', this.onAnswerClick);
-  }
+  this.quizList.addEventListener('click', this.setUsefulnessOnClick);
 };
 
 utilities.inherit(Review, BaseDOMComponent);
 
 Review.prototype = {
-  onAnswerClick: function(evt) {
+  setUsefulnessOnClick: function(evt) {
     if (evt.target.classList.contains('review-quiz-answer')) {
-      Array.prototype.forEach.call(this.quizAnswer, function(answer) {
-        answer.classList.remove(CLASS_ACTIVE);
-      });
-      evt.target.classList.add(CLASS_ACTIVE);
+      var isUseful = evt.target === this.quizAnswerYes;
+      this.data.updateUsefulness(isUseful, this.onUsefulnessUpdate.bind(this));
+    }
+  },
+
+  onUsefulnessUpdate: function(isUseful) {
+    if (isUseful) {
+      this.quizAnswerYes.classList.add(CLASS_ACTIVE);
+      this.quizAnswerNo.classList.remove(CLASS_ACTIVE);
+    } else {
+      this.quizAnswerNo.classList.add(CLASS_ACTIVE);
+      this.quizAnswerYes.classList.remove(CLASS_ACTIVE);
     }
   },
 
   remove: function() {
-    this.quizList.removeEventListener('click', this.onAnswerClick);
+    this.quizList.removeEventListener('click', this.setUsefulnessOnClick);
     BaseDOMComponent.prototype.remove.call(this);
   },
 

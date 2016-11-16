@@ -38,8 +38,11 @@ ReviewData.prototype = {
   setCreated: function(created) {
     this.created = created;
   },
-  setUsefulness: function(usefulness) {
-    this.reviewUsefulness = usefulness;
+  updateUsefulness: function(isUseful, callback) {
+    this.reviewUsefulness += isUseful ? 1 : -1;
+    if (typeof callback === 'function') {
+      callback(isUseful);
+    }
   },
   setRating: function(rating) {
     this.rating = rating;
