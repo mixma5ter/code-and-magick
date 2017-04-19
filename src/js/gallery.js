@@ -18,8 +18,11 @@ var Gallery = function(container, picturesList) {
   this.totalPictures.innerText = this.pictures.length;
 
   this.hide = this.hide.bind(this);
+  this.onEscKeyDown = this.onEscKeyDown.bind(this);
   this.onLeftClick = this.onLeftClick.bind(this);
+  this.onLeftKeyDown = this.onLeftKeyDown.bind(this);
   this.onRightClick = this.onRightClick.bind(this);
+  this.onRightKeyDown = this.onRightKeyDown.bind(this);
   this._reloadHash = this._reloadHash.bind(this);
   this.onHashChange = this.onHashChange.bind(this);
 
@@ -29,10 +32,39 @@ var Gallery = function(container, picturesList) {
 utilities.inherit(Gallery, BaseDOMComponent);
 
 Gallery.prototype = {
+  onEscKeyDown: function(evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      this.hide();
+    }
+  },
+
+  onLeftKeyDown: function(evt) {
+    if (evt.keyCode === 37) {
+      evt.preventDefault();
+
+      if (this.pictureIndex > 1) {
+        this.pictureIndex--;
+        this._reloadHash();
+      }
+    }
+  },
+
   onLeftClick: function() {
     if (this.pictureIndex > 1) {
       this.pictureIndex--;
       this._reloadHash();
+    }
+  },
+
+  onRightKeyDown: function(evt) {
+    if (evt.keyCode === 39) {
+      evt.preventDefault();
+
+      if (this.pictureIndex < this.pictures.length) {
+        this.pictureIndex++;
+        this._reloadHash();
+      }
     }
   },
 
@@ -71,8 +103,11 @@ Gallery.prototype = {
     this.element.classList.remove(CLASS_INVISIBLE);
 
     this.galleryClose.addEventListener('click', this.hide);
+    window.addEventListener('keydown', this.onEscKeyDown);
     this.controlLeft.addEventListener('click', this.onLeftClick);
+    window.addEventListener('keydown', this.onLeftKeyDown);
     this.controlRight.addEventListener('click', this.onRightClick);
+    window.addEventListener('keydown', this.onRightKeyDown);
 
     this._reloadHash();
   },
@@ -81,7 +116,9 @@ Gallery.prototype = {
     this.element.classList.add(CLASS_INVISIBLE);
     this.galleryClose.removeEventListener('click', this.hide);
     this.controlLeft.removeEventListener('click', this.onLeftClick);
+    window.removeEventListener('keydown', this.onLeftKeyDown);
     this.controlRight.removeEventListener('click', this.onRightClick);
+    window.removeEventListener('keydown', this.onRightKeyDown);
   },
 
   setPictureIndex: function() {

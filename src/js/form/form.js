@@ -2,16 +2,16 @@
 
 var utilities = require('../utilities');
 
-var formContainer = document.querySelector('.overlay-container');
-var formCloseButton = document.querySelector('.review-form-close');
-var reviewNameField = document.querySelector('#review-name');
-var reviewTextField = document.querySelector('#review-text');
-var reviewSubmitBtn = document.querySelector('.review-submit');
-var reviewLinkContainer = document.querySelector('.review-fields');
-var reviewNameLink = document.querySelector('.review-fields-name');
-var reviewTextLink = document.querySelector('.review-fields-text');
-var reviewMarkAll = document.querySelectorAll('input[name=review-mark]');
 var reviewAddBtn = document.querySelector('.reviews-controls-new');
+var formContainer = document.querySelector('.overlay-container');
+var formCloseButton = formContainer.querySelector('.review-form-close');
+var reviewNameField = formContainer.querySelector('#review-name');
+var reviewTextField = formContainer.querySelector('#review-text');
+var reviewSubmitBtn = formContainer.querySelector('.review-submit');
+var reviewLinkContainer = formContainer.querySelector('.review-fields');
+var reviewNameLink = formContainer.querySelector('.review-fields-name');
+var reviewTextLink = formContainer.querySelector('.review-fields-text');
+var reviewMarkAll = formContainer.querySelectorAll('input[name=review-mark]');
 
 function formValidation() {
   (function() {
@@ -81,6 +81,8 @@ var form = {
 };
 
 reviewAddBtn.addEventListener('click', function() {
+  window.addEventListener('keydown', onCloseKeydownHandler);
+
   var reviewMarkCookie = window.Cookies.get('review-mark');
 
   for(var i = 0; i < reviewMarkAll.length; i++) {
@@ -114,7 +116,17 @@ reviewSubmitBtn.addEventListener('click', function() {
 
 formCloseButton.onclick = function(evt) {
   evt.preventDefault();
+  window.removeEventListener('keydown', onCloseKeydownHandler);
   form.close();
+};
+
+// Обработчик нажатия esc/enter
+var onCloseKeydownHandler = function(evt) {
+  if (evt.keyCode === 27) {
+    evt.preventDefault();
+    window.removeEventListener('keydown', onCloseKeydownHandler);
+    form.close();
+  }
 };
 
 module.exports = form;

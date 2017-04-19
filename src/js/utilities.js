@@ -1,6 +1,20 @@
 'use strict';
 
+var filterData = require('./reviews/filter');
+
 module.exports = {
+
+  // загрузка и фильтрация данных из локального файла
+  loadData: function(data, params, callback) {
+    var loadedData = data.slice();
+
+    var filteredData = filterData(loadedData, params.filter);
+    var showData = filteredData.slice(params.from, params.to);
+
+    callback(showData);
+  },
+
+  // загрузка данных с сервера
   callbackLoad: function(url, params, callback) {
     var xhr = new XMLHttpRequest();
     var loadedData = [];

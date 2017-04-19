@@ -1,14 +1,12 @@
 'use strict';
 
-var Review = require('./review');
+var jsonData = require('../data/data');
 var utilities = require('../utilities');
+var Review = require('./review');
 var ReviewData = require('./review-data');
 
 var REVIEWS_BLOCK = 3;
-
 var CLASS_INVISIBLE = 'invisible';
-
-var REWIES_LOAD_URL = 'http://localhost:1507/api/reviews';
 
 var template = document.getElementById('review-template');
 var templateContainer = 'content' in template ? template.content : template;
@@ -22,8 +20,20 @@ var currentFilter = defaultFilter;
 var reviewBlockArray = [];
 var reviewBlockNumber = 0;
 
+var twoWeeks = 2 * 7 * 24 * 60 * 60 * 1000;
+
+// возвращает случайную дату из диапазона
+var getRandomTimeStampInRange = function(range) {
+  return Date.now() - parseInt(Math.random() * range);
+};
+
+// добавляет в обьект с данными случайную дату создания из диапазона в две недели
+jsonData.forEach(function(item) {
+  item.created = getRandomTimeStampInRange(twoWeeks);
+});
+
 var loadReviews = function(filterID, blockNumber) {
-  utilities.callbackLoad(REWIES_LOAD_URL, {
+  utilities.loadData(jsonData, {
     from: blockNumber,
     to: blockNumber + REVIEWS_BLOCK,
     filter: filterID
