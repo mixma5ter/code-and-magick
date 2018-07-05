@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
-* Студент: [Сергей Иншаков](https://up.htmlacademy.ru/javascript/7/user/59949).
-* Наставник: `Неизвестно`.
+* Студент: [Неопознанный енот](https://htmlacademy.ru/profile/id794407).
+* Наставник: [Сергей Иншаков](https://htmlacademy.ru/profile/id59949).
 
 ---
 
