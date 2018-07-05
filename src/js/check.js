@@ -20,8 +20,7 @@ var getMessage = function (a, b) {
   if (typeof a === 'object' && typeof b === 'object') {
     var distancePath = 0;
     for (var i = 0; i < a.length; i++) {
-      var productAB = a[i] * b[i];
-      distancePath += productAB;
+      distancePath += (a[i] * b[i]);
     }
     return 'Я прошёл ' + distancePath + ' метров';
   }
