@@ -429,18 +429,18 @@ window.Game = (function () {
 
           this.ctx.fillStyle = '#FFFFFF';
           this.ctx.beginPath();
-          this.ctx.moveTo(180,140);
-          this.ctx.quadraticCurveTo(120,140,60,140);
-          this.ctx.quadraticCurveTo(20,140,20,100);
-          this.ctx.quadraticCurveTo(20,80,20,60);
-          this.ctx.quadraticCurveTo(20,20,60,20);
-          this.ctx.quadraticCurveTo(200,20,340,20);
-          this.ctx.quadraticCurveTo(380,20,380,60);
-          this.ctx.quadraticCurveTo(380,80,380,100);
-          this.ctx.quadraticCurveTo(380,140,340,140);
-          this.ctx.quadraticCurveTo(250,140,220,140);
-          this.ctx.quadraticCurveTo(210,170,170,180);
-          this.ctx.quadraticCurveTo(190,160,180,140);
+          this.ctx.moveTo(320, 140);
+          this.ctx.quadraticCurveTo(260, 140, 200, 140);
+          this.ctx.quadraticCurveTo(160, 140, 160, 100);
+          this.ctx.quadraticCurveTo(160, 80, 160, 60);
+          this.ctx.quadraticCurveTo(160, 20, 200, 20);
+          this.ctx.quadraticCurveTo(340, 20, 480, 20);
+          this.ctx.quadraticCurveTo(520, 20, 520, 60);
+          this.ctx.quadraticCurveTo(520, 80, 520, 100);
+          this.ctx.quadraticCurveTo(520, 140, 480, 140);
+          this.ctx.quadraticCurveTo(390, 140, 360, 140);
+          this.ctx.quadraticCurveTo(350, 170, 310, 180);
+          this.ctx.quadraticCurveTo(330, 160, 320, 140);
           this.ctx.fill();
 
           this.ctx.shadowOffsetX = 0;
@@ -449,8 +449,8 @@ window.Game = (function () {
 
           this.ctx.font = '16px PT Mono';
           this.ctx.fillStyle = '#000000';
-          this.ctx.fillText('Добро пожаловать в игру!', 60, 70);
-          this.ctx.fillText('Нажмите пробел что-бы начать!', 60, 98);
+          this.ctx.fillText('Добро пожаловать в игру!', 200, 70);
+          this.ctx.fillText('Нажмите пробел что-бы начать!', 200, 98);
 
           break;
       }
