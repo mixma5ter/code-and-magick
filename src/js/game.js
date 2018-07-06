@@ -275,6 +275,8 @@ window.Game = (function() {
     this.setDeactivated(false);
   };
 
+  var lineQuantity = 1;//Глобальная переменная для функции холста экрана паузы (строка 437)
+
   Game.prototype = {
     /**
      * Текущий уровень игры.
@@ -418,6 +420,7 @@ window.Game = (function() {
           ctx.fillText(line, marginLeft, marginTop);
           line = words[i] + ' ';
           marginTop += lineHeight;
+          lineQuantity += 1;//глобальная переменная для размера холста
         } else {
           line = testLine;
         }
@@ -428,7 +431,7 @@ window.Game = (function() {
     /**
      * Функция холста для экрана паузы.
      */
-    pauseMessageCanvas: function(x, y, lines) {
+    pauseMessageCanvas: function(x, y, lineQuantity) {
       this.ctx.shadowOffsetX = 10;
       this.ctx.shadowOffsetY = 10;
       this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
@@ -436,8 +439,8 @@ window.Game = (function() {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
       this.ctx.lineTo(x + 390, y);
-      this.ctx.lineTo(x + 360, y + 40 + (lines * 27));
-      this.ctx.lineTo(x - 40, y + 60 + (lines * 27));
+      this.ctx.lineTo(x + 360, y + 40 + (lineQuantity * 27));
+      this.ctx.lineTo(x - 40, y + 60 + (lineQuantity * 27));
       this.ctx.closePath();
       this.ctx.strokeStyle = '#0066ff';
       this.ctx.stroke();
