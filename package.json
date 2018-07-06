@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/htmlacademy-javascript/59949-code-and-magick",
   "devDependencies": {
+    "colors": "^1.3.0",
     "copy-webpack-plugin": "^4.5.2",
     "eslint": "^5.0.1",
     "eslint-plugin-requirejs": "^3.2.0",
