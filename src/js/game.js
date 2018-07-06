@@ -410,21 +410,9 @@ window.Game = (function () {
     _drawPauseScreen: function () {
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
-          break;
-        case Verdict.FAIL:
-          console.log('you have failed!');
-          break;
-        case Verdict.PAUSE:
-          console.log('game is on pause!');
-          break;
-        case Verdict.INTRO:
-          //console.log('welcome to the game! Press Space to start');
-          //var ctx = document.getElementById('canvas').getContext('2d');
 
           this.ctx.shadowOffsetX = 10;
           this.ctx.shadowOffsetY = 10;
-          this.ctx.shadowBlur = 5;
           this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
 
           this.ctx.fillStyle = '#FFFFFF';
@@ -439,18 +427,104 @@ window.Game = (function () {
           this.ctx.quadraticCurveTo(520, 80, 520, 100);
           this.ctx.quadraticCurveTo(520, 140, 480, 140);
           this.ctx.quadraticCurveTo(390, 140, 360, 140);
-          this.ctx.quadraticCurveTo(350, 170, 310, 180);
-          this.ctx.quadraticCurveTo(330, 160, 320, 140);
           this.ctx.fill();
 
           this.ctx.shadowOffsetX = 0;
           this.ctx.shadowOffsetY = 0;
-          this.ctx.shadowBlur = 0;
 
           this.ctx.font = '16px PT Mono';
           this.ctx.fillStyle = '#000000';
-          this.ctx.fillText('Добро пожаловать в игру!', 200, 70);
-          this.ctx.fillText('Нажмите пробел что-бы начать!', 200, 98);
+          this.ctx.fillText('Поздравляем! Вы победили!', 220, 85);
+
+          break;
+        case Verdict.FAIL:
+
+          this.ctx.shadowOffsetX = 10;
+          this.ctx.shadowOffsetY = 10;
+          this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.beginPath();
+          this.ctx.moveTo(320, 140);
+          this.ctx.quadraticCurveTo(260, 140, 200, 140);
+          this.ctx.quadraticCurveTo(160, 140, 160, 100);
+          this.ctx.quadraticCurveTo(160, 80, 160, 60);
+          this.ctx.quadraticCurveTo(160, 20, 200, 20);
+          this.ctx.quadraticCurveTo(340, 20, 480, 20);
+          this.ctx.quadraticCurveTo(520, 20, 520, 60);
+          this.ctx.quadraticCurveTo(520, 80, 520, 100);
+          this.ctx.quadraticCurveTo(520, 140, 480, 140);
+          this.ctx.quadraticCurveTo(390, 140, 360, 140);
+          this.ctx.fill();
+
+          this.ctx.shadowOffsetX = 0;
+          this.ctx.shadowOffsetY = 0;
+
+          this.ctx.font = '16px PT Mono';
+          this.ctx.fillStyle = '#000000';
+          this.ctx.fillText('Сожалеем! Вы проиграли!', 230, 85);
+
+          break;
+        case Verdict.PAUSE:
+
+          this.ctx.shadowOffsetX = 10;
+          this.ctx.shadowOffsetY = 10;
+          this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.beginPath();
+          this.ctx.moveTo(320, 140);
+          this.ctx.quadraticCurveTo(260, 140, 200, 140);
+          this.ctx.quadraticCurveTo(160, 140, 160, 100);
+          this.ctx.quadraticCurveTo(160, 80, 160, 60);
+          this.ctx.quadraticCurveTo(160, 20, 200, 20);
+          this.ctx.quadraticCurveTo(340, 20, 480, 20);
+          this.ctx.quadraticCurveTo(520, 20, 520, 60);
+          this.ctx.quadraticCurveTo(520, 80, 520, 100);
+          this.ctx.quadraticCurveTo(520, 140, 480, 140);
+          this.ctx.quadraticCurveTo(390, 140, 360, 140);
+          this.ctx.fill();
+
+          this.ctx.shadowOffsetX = 0;
+          this.ctx.shadowOffsetY = 0;
+
+          this.ctx.font = '16px PT Mono';
+          this.ctx.fillStyle = '#000000';
+          this.ctx.fillText('Игра на паузе!', 275, 70);
+          this.ctx.fillText('Для продолжения нажмите пробел.', 195, 100);
+
+          break;
+        case Verdict.INTRO:
+
+          this.ctx.shadowOffsetX = 10;
+          this.ctx.shadowOffsetY = 10;
+          this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.beginPath();
+          this.ctx.moveTo(320, 180);//1
+          this.ctx.quadraticCurveTo(240, 180, 180, 180);//2
+          this.ctx.quadraticCurveTo(140, 180, 140, 140);//3
+          this.ctx.quadraticCurveTo(140, 80, 140, 60);//4
+          this.ctx.quadraticCurveTo(140, 20, 180, 20);//5
+          this.ctx.quadraticCurveTo(360, 20, 500, 20);//6
+          this.ctx.quadraticCurveTo(540, 20, 540, 60);//7
+          this.ctx.quadraticCurveTo(540, 120, 540, 140);//8
+          this.ctx.quadraticCurveTo(540, 180, 500, 180);//9
+          this.ctx.quadraticCurveTo(390, 180, 360, 180);//10
+          this.ctx.quadraticCurveTo(350, 210, 310, 220);//11
+          this.ctx.quadraticCurveTo(330, 200, 320, 180);//1
+          this.ctx.fill();
+
+          this.ctx.shadowOffsetX = 0;
+          this.ctx.shadowOffsetY = 0;
+
+          this.ctx.font = '16px PT Mono';
+          this.ctx.fillStyle = '#000000';
+          this.ctx.fillText('Добро пожаловать в игру!', 225, 60);
+          this.ctx.fillText('Используйте стрелки для перемещения', 175, 90);
+          this.ctx.fillText('и shift для стрельбы!', 240, 120);
+          this.ctx.fillText('Нажмите пробел чтобы начать!', 210, 150);
 
           break;
       }
