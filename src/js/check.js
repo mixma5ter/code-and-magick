@@ -1,25 +1,24 @@
 'use strict';
 
-var getMessage = function (a, b) {
+var getMessage = function(a, b) {
   if (typeof a === 'boolean') {
     if (a === true) {
       return 'Я попал в ' + b;
-    }
-    if (a === false) {
+    } else {
       return 'Я никуда не попал';
     }
   }
   if (typeof a === 'number') {
     return 'Я прыгнул на ' + (a * 100) + ' сантиметров';
   }
-  if (typeof a === 'object' && typeof b !== 'object') {
+  if (Array.isArray(a) && !Array.isArray(b)) {
     var numberOfSteps = 0;
     for (var i = 0; i < a.length; i++) {
       numberOfSteps += a[i];
     }
     return 'Я прошёл ' + numberOfSteps + ' шагов';
   }
-  if (typeof a === 'object' && typeof b === 'object') {
+  if (Array.isArray(a) && Array.isArray(b)) {
     var distancePath = 0;
     for (var i = 0; i < a.length; i++) {
       distancePath += (a[i] * b[i]);
