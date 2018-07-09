@@ -36,24 +36,40 @@ window.form = (function() {
   var reviewMark2 = document.getElementById('review-mark-2');
   var reviewFieldsName = formContainer.querySelector('.review-fields-name');
   var reviewFieldsText = formContainer.querySelector('.review-fields-text');
+  var reviesSubmitBtn = formContainer.querySelector('.review-submit');
+
+  reviesSubmitBtn.setAttribute('disabled', 'disabled');
 
   reviewName.oninput = function() {
     if (reviewName.value) {
+      reviesSubmitBtn.removeAttribute('disabled', 'disabled');
       reviewFieldsName.classList.add('invisible');
     } else {
+      reviesSubmitBtn.setAttribute('disabled', 'disabled');
       reviewFieldsName.classList.remove('invisible');
-      reviewName.style.outline = '2px solid red';
     }
   };
 
-  reviewText.oninput = function() {
-    if (reviewText.value) {
-      reviewFieldsText.classList.add('invisible');
-    } else if (reviewMark1.checked || reviewMark2.checked) {
-      reviewFieldsText.classList.remove('invisible');
-      reviewText.style.outline = '2px solid red';
-    }
-  };
+  // reviewText.oninput = function() {
+  //   if ((reviewMark1.checked || reviewMark2.checked) && !reviewText.value) {
+  //     reviewFieldsText.classList.remove('invisible');
+  //     reviewText.style.outline = '2px solid red';
+  //   } else {
+  //     reviewFieldsText.classList.add('invisible');
+  //   }
+  // };
+
+  // reviewName.oninput = function() {
+  //   if (reviewName.value) {
+  //     reviewFieldsName.classList.add('invisible');
+  //     reviesSubmitBtn.setAttribute('disabled', true);
+  //     reviewText.style.outline = '2px solid blue';
+  //   } else {
+  //     reviewFieldsName.classList.remove('invisible');
+  //     reviesSubmitBtn.setAttribute('disabled', true);
+  //     reviewName.style.outline = '2px solid red';
+  //   }
+  // };
 
   return form;
 })();
