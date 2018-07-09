@@ -2,7 +2,7 @@
 
 var getMessage = function(a, b) {
   if (typeof a === 'boolean') {
-    if (a === true) {
+    if (a) {
       return 'Я попал в ' + b;
     } else {
       return 'Я никуда не попал';
@@ -11,7 +11,7 @@ var getMessage = function(a, b) {
   if (typeof a === 'number') {
     return 'Я прыгнул на ' + (a * 100) + ' сантиметров';
   }
-  if (Array.isArray(a) && !Array.isArray(b)) {
+  if (Array.isArray(a)) {
     var numberOfSteps = 0;
     for (var i = 0; i < a.length; i++) {
       numberOfSteps += a[i];
