@@ -414,6 +414,7 @@ window.Game = (function() {
         var testLine = line + words[i] + ' ';
         var testWidth = ctx.measureText(testLine).width;
         if (testWidth > maxWidth) {
+          this.ctx.fillStyle = '#000000';
           ctx.fillText(line, marginLeft, marginTop);
           line = words[i] + ' ';
           marginTop += lineHeight;
@@ -445,9 +446,9 @@ window.Game = (function() {
     },
 
     /**
-     ** Функция холста для экрана паузы.
+     ** Функция отрисовки холста для экрана паузы.
      **/
-    pauseMessageCanvas: function(x, y, h) {
+    drawCanvas: function(x, y, h) {
       this.ctx.shadowOffsetX = 10;
       this.ctx.shadowOffsetY = 10;
       this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
@@ -481,23 +482,19 @@ window.Game = (function() {
       var lineHeight = 30;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          this.pauseMessageCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[0], textWidth));
-          this.ctx.fillStyle = '#000000';
+          this.drawCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[0], textWidth));
           this.wrapText(this.ctx, pauseScreenMessage[0], textPositionX, textPositionY, textWidth, lineHeight);
           break;
         case Verdict.FAIL:
-          this.pauseMessageCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[1], textWidth));
-          this.ctx.fillStyle = '#000000';
+          this.drawCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[1], textWidth));
           this.wrapText(this.ctx, pauseScreenMessage[1], textPositionX, textPositionY, textWidth, lineHeight);
           break;
         case Verdict.PAUSE:
-          this.pauseMessageCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[2], textWidth));
-          this.ctx.fillStyle = '#000000';
+          this.drawCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[2], textWidth));
           this.wrapText(this.ctx, pauseScreenMessage[2], textPositionX, textPositionY, textWidth, lineHeight);
           break;
         case Verdict.INTRO:
-          this.pauseMessageCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[3], textWidth));
-          this.ctx.fillStyle = '#000000';
+          this.drawCanvas(messagePositionX, messagePositionY, this.lineQuantity(this.ctx, pauseScreenMessage[3], textWidth));
           this.wrapText(this.ctx, pauseScreenMessage[3], textPositionX, textPositionY, textWidth, lineHeight);
           break;
       }
