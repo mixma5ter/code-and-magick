@@ -45,17 +45,21 @@ window.form = (function() {
 
     if (reviewName.value && reviewMarkValue > 2) {
       reviesSubmitBtn.removeAttribute('disabled', 'disabled');
-      reviewFieldsName.classList.add('invisible');
+    } else if (reviewName.value && reviewMarkValue <= 2 && reviewText.value) {
+      reviesSubmitBtn.removeAttribute('disabled', 'disabled');
     } else {
       reviesSubmitBtn.setAttribute('disabled', 'disabled');
+    }
+
+    if (reviewName.value) {
+      reviewFieldsName.classList.add('invisible');
+    } else {
       reviewFieldsName.classList.remove('invisible');
     }
 
-    if (reviewText.value && reviewMarkValue > 2) {
-      reviesSubmitBtn.removeAttribute('disabled', 'disabled');
+    if (reviewText.value) {
       reviewFieldsText.classList.add('invisible');
     } else {
-      reviesSubmitBtn.setAttribute('disabled', 'disabled');
       reviewFieldsText.classList.remove('invisible');
     }
   };
@@ -64,34 +68,6 @@ window.form = (function() {
     evt.preventDefault();
     form.close();
   };
-
-  // var reviewName = document.getElementById('review-name');
-  // var reviewText = document.getElementById('review-text');
-  // var reviewMark1 = document.getElementById('review-mark-1');
-  // var reviewMark2 = document.getElementById('review-mark-2');
-  // var reviewFieldsName = formContainer.querySelector('.review-fields-name');
-  // var reviewFieldsText = formContainer.querySelector('.review-fields-text');
-  // var reviesSubmitBtn = formContainer.querySelector('.review-submit');
-  //
-  // reviesSubmitBtn.setAttribute('disabled', 'disabled');
-  //
-  // reviewName.oninput = function () {
-  //   if (reviewName.value) {
-  //     reviesSubmitBtn.removeAttribute('disabled', 'disabled');
-  //     reviewFieldsName.classList.add('invisible');
-  //   } else {
-  //     reviesSubmitBtn.setAttribute('disabled', 'disabled');
-  //     reviewFieldsName.classList.remove('invisible');
-  //   }
-  // };
-  //
-  // reviewText.oninput = function() {
-  //   if (reviewText.value) {
-  //     reviewFieldsText.classList.add('invisible');
-  //   } else {
-  //     reviewFieldsText.classList.remove('invisible');
-  //   }
-  // };
 
   return form;
 })();
