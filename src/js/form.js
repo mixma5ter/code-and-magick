@@ -27,15 +27,15 @@ window.form = (function() {
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
   var reviewName = document.getElementById('review-name');
   var reviewText = document.getElementById('review-text');
-  var reviewFormGroupMark = formContainer.querySelector('.review-form-group-mark');
-  var reviewMark = reviewFormGroupMark.getElementsByTagName('input');
+  var reviewMark = formContainer.querySelectorAll('input[name=review-mark]');
+  var reviewFields = formContainer.querySelector('.review-fields');
   var reviewFieldsName = formContainer.querySelector('.review-fields-name');
   var reviewFieldsText = formContainer.querySelector('.review-fields-text');
 
-  reviesSubmitBtn.setAttribute('disabled', 'disabled');
+  reviesSubmitBtn.disabled = true;
 
   formContainer.oninput = function(evt) {
-    evt.preventDefault();//Отключение стандартного действия
+    evt.preventDefault();
 
     for (var i = 0; i < reviewMark.length; i++) {
       if (reviewMark[i].checked) {
@@ -44,11 +44,11 @@ window.form = (function() {
     }
 
     if (reviewName.value && reviewMarkValue > 2) {
-      reviesSubmitBtn.removeAttribute('disabled', 'disabled');
+      reviesSubmitBtn.disabled = false;
     } else if (reviewName.value && reviewMarkValue <= 2 && reviewText.value) {
-      reviesSubmitBtn.removeAttribute('disabled', 'disabled');
+      reviesSubmitBtn.disabled = false;
     } else {
-      reviesSubmitBtn.setAttribute('disabled', 'disabled');
+      reviesSubmitBtn.disabled = true;
     }
 
     if (reviewName.value) {
@@ -61,6 +61,12 @@ window.form = (function() {
       reviewFieldsText.classList.add('invisible');
     } else {
       reviewFieldsText.classList.remove('invisible');
+    }
+
+    if (reviewName.value && reviewText.value) {
+      reviewFields.classList.add('invisible');
+    } else {
+      reviewFields.classList.remove('invisible');
     }
   };
 
