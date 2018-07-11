@@ -20,9 +20,10 @@ var getMessage = function(a, b) {
   }
   if (Array.isArray(a) && Array.isArray(b)) {
     var distancePath = 0;
-    for (var i = 0; i < a.length; i++) {
-      distancePath += (a[i] * b[i]);
+    for (var j = 0; j < a.length; j++) {
+      distancePath += (a[j] * b[j]);
     }
     return 'Я прошёл ' + distancePath + ' метров';
   }
+  return 'Полученные данные не верны';
 };
