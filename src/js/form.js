@@ -3,27 +3,6 @@
 window.form = (function() {
   var formContainer = document.querySelector('.overlay-container');
   var formCloseButton = document.querySelector('.review-form-close');
-
-  var form = {
-    onClose: null,
-
-    /**
-     * @param {Function} cb
-     */
-    open: function(cb) {
-      formContainer.classList.remove('invisible');
-      cb();
-    },
-
-    close: function() {
-      formContainer.classList.add('invisible');
-
-      if (typeof this.onClose === 'function') {
-        this.onClose();
-      }
-    }
-  };
-
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
   var reviewName = document.getElementById('review-name');
   var reviewText = document.getElementById('review-text');
@@ -35,6 +14,28 @@ window.form = (function() {
   var now = new Date();
   var grace = new Date('1991-10-09');
   var deleteCookie = ((now - grace) / (24 * 60 * 60 * 1000));
+
+  var form = {
+    onClose: null,
+
+    /**
+     * @param {Function} cb
+     */
+    open: function(cb) {
+      formContainer.classList.remove('invisible');
+      reviewName.value = Cookies.get('review-name');
+      //reviewMark[(Cookies.get('review-mark')) - 1].checked = true;
+      cb();
+    },
+
+    close: function() {
+      formContainer.classList.add('invisible');
+
+      if (typeof this.onClose === 'function') {
+        this.onClose();
+      }
+    }
+  };
 
   reviesSubmitBtn.disabled = true;
 
@@ -75,8 +76,8 @@ window.form = (function() {
   };
 
   reviesSubmitBtn.onclick = function() {
-    Cookies.set('review-mark', reviewMarkValue, { expires: deleteCookie });
-    Cookies.set('review-name', reviewName.value, { expires: deleteCookie });
+    Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
+    Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
   };
 
   formCloseButton.onclick = function(evt) {
