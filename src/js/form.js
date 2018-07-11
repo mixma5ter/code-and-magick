@@ -14,12 +14,12 @@ window.form = (function() {
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
 
   var checkValidityOpen = function() {
-    if (Cookies.get('review-mark-index')) {
-      reviewMark[(Cookies.get('review-mark-index'))].checked = true;
+    if (window.Cookies.get('review-mark-index')) {
+      reviewMark[(window.Cookies.get('review-mark-index'))].checked = true;
     }
 
-    if (Cookies.get('review-name')) {
-      reviewName.value = Cookies.get('review-name');
+    if (window.Cookies.get('review-name')) {
+      reviewName.value = window.Cookies.get('review-name');
     }
   };
 
@@ -88,9 +88,9 @@ window.form = (function() {
       birthDate.setFullYear(dateNow.getFullYear() - 1);
     }
     var deleteCookie = ((dateNow - birthDate) / (24 * 60 * 60 * 1000));
-    Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
-    Cookies.set('review-mark-index', reviewMarkIndex, {expires: deleteCookie});
-    Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
+    window.Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
+    window.Cookies.set('review-mark-index', reviewMarkIndex, {expires: deleteCookie});
+    window.Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
   };
 
   formContainer.oninput = function(evt) {
