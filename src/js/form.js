@@ -8,6 +8,7 @@ window.form = (function() {
   var reviewText = document.getElementById('review-text');
   var reviewMark = formContainer.querySelectorAll('input[name=review-mark]');
   var reviewMarkValue;
+  var reviewMarkIndex;
   var reviewFields = formContainer.querySelector('.review-fields');
   var reviewFieldsName = formContainer.querySelector('.review-fields-name');
   var reviewFieldsText = formContainer.querySelector('.review-fields-text');
@@ -24,7 +25,7 @@ window.form = (function() {
     open: function(cb) {
       formContainer.classList.remove('invisible');
       reviewName.value = Cookies.get('review-name');
-      //reviewMark[(Cookies.get('review-mark')) - 1].checked = true;
+      reviewMark[(Cookies.get('review-mark-index'))].checked = true;
       cb();
     },
 
@@ -45,6 +46,7 @@ window.form = (function() {
     for (var i = 0; i < reviewMark.length; i++) {
       if (reviewMark[i].checked) {
         reviewMarkValue = reviewMark[i].value;
+        reviewMarkIndex = i;
       }
     }
 
@@ -77,6 +79,7 @@ window.form = (function() {
 
   reviesSubmitBtn.onclick = function() {
     Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
+    Cookies.set('review-mark-index', reviewMarkIndex, {expires: deleteCookie});
     Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
   };
 
