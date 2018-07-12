@@ -3,6 +3,8 @@
 window.form = (function() {
   var formContainer = document.querySelector('.overlay-container');
   var formCloseButton = document.querySelector('.review-form-close');
+  var reviesSubmitBtn = formContainer.querySelector('.review-submit');
+
   var reviewMark = formContainer.querySelectorAll('input[name=review-mark]');
   var reviewMarkValue;
   var reviewMarkIndex;
@@ -11,7 +13,44 @@ window.form = (function() {
   var reviewFields = formContainer.querySelector('.review-fields');
   var reviewFieldsName = formContainer.querySelector('.review-fields-name');
   var reviewFieldsText = formContainer.querySelector('.review-fields-text');
-  var reviesSubmitBtn = formContainer.querySelector('.review-submit');
+
+  var form = {
+    onClose: null,
+
+    /**
+     * @param {Function} cb
+     */
+    open: function(cb) {
+      formContainer.classList.remove('invisible');
+      checkCookies();
+      checkValidity();
+      cb();
+    },
+
+    close: function() {
+      formContainer.classList.add('invisible');
+
+      if (typeof this.onClose === 'function') {
+        this.onClose();
+      }
+    }
+  };
+
+  formContainer.oninput = function(evt) {
+    evt.preventDefault();
+    checkValidity();
+  };
+
+  reviesSubmitBtn.onclick = function(evt) {
+    evt.preventDefault();
+    setCookies();
+    form.close();
+  };
+
+  formCloseButton.onclick = function(evt) {
+    evt.preventDefault();
+    form.close();
+  };
 
   function checkCookies() {
     if (window.Cookies.get('review-mark-index')) {
@@ -70,44 +109,6 @@ window.form = (function() {
       reviewFields.classList.remove('invisible');
     }
   }
-
-  var form = {
-    onClose: null,
-
-    /**
-     * @param {Function} cb
-     */
-    open: function(cb) {
-      formContainer.classList.remove('invisible');
-      checkCookies();
-      checkValidity();
-      cb();
-    },
-
-    close: function() {
-      formContainer.classList.add('invisible');
-
-      if (typeof this.onClose === 'function') {
-        this.onClose();
-      }
-    }
-  };
-
-  formContainer.oninput = function(evt) {
-    evt.preventDefault();
-    checkValidity();
-  };
-
-  reviesSubmitBtn.onclick = function(evt) {
-    evt.preventDefault();
-    setCookies();
-    form.close();
-  };
-
-  formCloseButton.onclick = function(evt) {
-    evt.preventDefault();
-    form.close();
-  };
 
   return form;
 })();
