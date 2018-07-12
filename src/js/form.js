@@ -13,7 +13,7 @@ window.form = (function() {
   var reviewFieldsText = formContainer.querySelector('.review-fields-text');
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
 
-  var checkValidityOpen = function() {
+  var checkCookies = function() {
     if (window.Cookies.get('review-mark-index')) {
       reviewMark[(window.Cookies.get('review-mark-index'))].checked = true;
     }
@@ -23,7 +23,7 @@ window.form = (function() {
     }
   };
 
-  var checkValidityInput = function() {
+  var checkValidity = function() {
     for (var i = 0; i < reviewMark.length; i++) {
       if (reviewMark[i].checked) {
         reviewMarkValue = reviewMark[i].value;
@@ -66,8 +66,8 @@ window.form = (function() {
      */
     open: function(cb) {
       formContainer.classList.remove('invisible');
-      checkValidityOpen();
-      checkValidityInput();
+      checkCookies();
+      checkValidity();
       cb();
     },
 
@@ -80,7 +80,7 @@ window.form = (function() {
     }
   };
 
-  var setCookie = function() {
+  var setCookies = function() {
     var dateNow = new Date();
     var birthDate = new Date('1906-12-09');
     birthDate.setFullYear(dateNow.getFullYear());
@@ -95,12 +95,12 @@ window.form = (function() {
 
   formContainer.oninput = function(evt) {
     evt.preventDefault();
-    checkValidityInput();
+    checkValidity();
   };
 
   reviesSubmitBtn.onclick = function(evt) {
     evt.preventDefault();
-    setCookie();
+    setCookies();
     form.close();
   };
 
