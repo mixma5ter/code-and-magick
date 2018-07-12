@@ -5,6 +5,7 @@ window.form = (function() {
   var formCloseButton = document.querySelector('.review-form-close');
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
 
+  var reviewMarksAll = formContainer.querySelectorAll('input[name=review-mark]');
   var reviewMark;//значение получаем из cookie, если оно есть.
 
   var reviewName = document.getElementById('review-name');
@@ -21,8 +22,6 @@ window.form = (function() {
      */
     open: function(cb) {
       formContainer.classList.remove('invisible');
-      getCookies();
-      checkValidity();
       cb();
     },
 
@@ -35,11 +34,24 @@ window.form = (function() {
     }
   };
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  formContainer.oninput = function(evt) {
-    evt.preventDefault();
+  window.onload = function() {
+    getCookies();
     checkValidity();
   };
+
+  reviewName.oninput = function() {
+    checkValidity();
+  };
+
+  reviewText.oninput = function() {
+    checkValidity();
+  };
+
+  for(var i = 0; i < reviewMarksAll.length; i++) {
+    reviewMarksAll[i].onchange = function() {
+      checkValidity();
+    };
+  }
 
   reviesSubmitBtn.onclick = function(evt) {
     evt.preventDefault();
@@ -57,11 +69,10 @@ window.form = (function() {
    * Если они есть, устанавливает значения в поля формы.
    */
   function getCookies() {
-    var reviewMarksAll = formContainer.querySelectorAll('input[name=review-mark]');
     var reviewMarkCookie = window.Cookies.get('review-mark');
-    for (var i = 0; i < reviewMarksAll.length; i++) {
-      if (reviewMarksAll[i].value === reviewMarkCookie) {
-        reviewMarksAll[i].checked = true;
+    for (var j = 0; j < reviewMarksAll.length; j++) {
+      if (reviewMarksAll[j].value === reviewMarkCookie) {
+        reviewMarksAll[j].checked = true;
       }
     }
     reviewName.value = window.Cookies.get('review-name') || '';
