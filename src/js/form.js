@@ -5,9 +5,8 @@ window.form = (function() {
   var formCloseButton = document.querySelector('.review-form-close');
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
 
-  var reviewMark = formContainer.querySelectorAll('input[name=review-mark]');
-  var reviewMarkValue;
-  var reviewMarkIndex;
+  var reviewMark;//значение получаем из cookie, если оно есть.
+
   var reviewName = document.getElementById('review-name');
   var reviewText = document.getElementById('review-text');
   var reviewFields = formContainer.querySelector('.review-fields');
@@ -22,8 +21,8 @@ window.form = (function() {
      */
     open: function(cb) {
       formContainer.classList.remove('invisible');
-      checkCookies();
-      checkValidity();
+      //getCookies();
+      //checkValidity();
       cb();
     },
 
@@ -36,6 +35,7 @@ window.form = (function() {
     }
   };
 
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   formContainer.oninput = function(evt) {
     evt.preventDefault();
     checkValidity();
@@ -52,16 +52,24 @@ window.form = (function() {
     form.close();
   };
 
-  function checkCookies() {
-    if (window.Cookies.get('review-mark-index')) {
-      reviewMark[(window.Cookies.get('review-mark-index'))].checked = true;
+  /**
+   * Проверка cookies.
+   * Если они есть, устанавливает значения в поля формы.
+   */
+  function getCookies() {
+    var reviewMarksAll = formContainer.querySelectorAll('input[name=review-mark]');
+    var reviewMarkCookie = window.Cookies.get('review-mark');
+    for (var i = 0; i < reviewMarksAll.length; i++) {
+      if (reviewMarksAll[i].value === reviewMarkCookie) {
+        reviewMarksAll[i].checked = true;
+      }
     }
-
-    if (window.Cookies.get('review-name')) {
-      reviewName.value = window.Cookies.get('review-name');
-    }
+    reviewName.value = window.Cookies.get('review-name') || '';
   }
 
+  /**
+   * Сохранение cookies.
+   */
   function setCookies() {
     var dateNow = new Date();
     var birthDate = new Date('1906-12-09');
@@ -69,23 +77,20 @@ window.form = (function() {
     if (birthDate >= dateNow) {
       birthDate.setFullYear(dateNow.getFullYear() - 1);
     }
-    var deleteCookie = ((dateNow - birthDate) / (24 * 60 * 60 * 1000));
-    window.Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
-    window.Cookies.set('review-mark-index', reviewMarkIndex, {expires: deleteCookie});
-    window.Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
+    var dateToExpire = Math.floor((dateNow - birthDate) / (24 * 60 * 60 * 1000));
+    window.Cookies.set('review-mark', reviewMark.value, {expires: dateToExpire});
+    window.Cookies.set('review-name', reviewName.value, {expires: dateToExpire});
   }
 
+  /**
+   * Проверка формы.
+   * Меняет поведение кнопки отправки отзыва.
+   * Скрывает блок с посказками.
+   */
   function checkValidity() {
-    for (var i = 0; i < reviewMark.length; i++) {
-      if (reviewMark[i].checked) {
-        reviewMarkValue = reviewMark[i].value;
-        reviewMarkIndex = i;
-      }
-    }
+    reviewMark = document.querySelector('input[name=review-mark]:checked');
 
-    if (reviewName.value && reviewMarkValue > 2) {
-      reviesSubmitBtn.disabled = false;
-    } else if (reviewName.value && reviewMarkValue <= 2 && reviewText.value) {
+    if (reviewName.value && reviewMark.value > 2 || reviewName.value && reviewMark.value <= 2 && reviewText.value) {
       reviesSubmitBtn.disabled = false;
     } else {
       reviesSubmitBtn.disabled = true;
