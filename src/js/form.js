@@ -21,8 +21,8 @@ window.form = (function() {
      */
     open: function(cb) {
       formContainer.classList.remove('invisible');
-      //getCookies();
-      //checkValidity();
+      getCookies();
+      checkValidity();
       cb();
     },
 
@@ -90,11 +90,7 @@ window.form = (function() {
   function checkValidity() {
     reviewMark = document.querySelector('input[name=review-mark]:checked');
 
-    if (reviewName.value && reviewMark.value > 2 || reviewName.value && reviewMark.value <= 2 && reviewText.value) {
-      reviesSubmitBtn.disabled = false;
-    } else {
-      reviesSubmitBtn.disabled = true;
-    }
+    reviesSubmitBtn.disabled = !(reviewName.value && reviewMark.value > 2 || reviewName.value && reviewMark.value <= 2 && reviewText.value);
 
     if (reviewName.value) {
       reviewFieldsName.classList.add('invisible');
