@@ -13,7 +13,7 @@ window.form = (function() {
   var reviewFieldsText = formContainer.querySelector('.review-fields-text');
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
 
-  var checkCookies = function() {
+  function checkCookies() {
     if (window.Cookies.get('review-mark-index')) {
       reviewMark[(window.Cookies.get('review-mark-index'))].checked = true;
     }
@@ -21,9 +21,22 @@ window.form = (function() {
     if (window.Cookies.get('review-name')) {
       reviewName.value = window.Cookies.get('review-name');
     }
-  };
+  }
 
-  var checkValidity = function() {
+  function setCookies() {
+    var dateNow = new Date();
+    var birthDate = new Date('1906-12-09');
+    birthDate.setFullYear(dateNow.getFullYear());
+    if (birthDate >= dateNow) {
+      birthDate.setFullYear(dateNow.getFullYear() - 1);
+    }
+    var deleteCookie = ((dateNow - birthDate) / (24 * 60 * 60 * 1000));
+    window.Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
+    window.Cookies.set('review-mark-index', reviewMarkIndex, {expires: deleteCookie});
+    window.Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
+  }
+
+  function checkValidity() {
     for (var i = 0; i < reviewMark.length; i++) {
       if (reviewMark[i].checked) {
         reviewMarkValue = reviewMark[i].value;
@@ -56,7 +69,7 @@ window.form = (function() {
     } else {
       reviewFields.classList.remove('invisible');
     }
-  };
+  }
 
   var form = {
     onClose: null,
@@ -78,19 +91,6 @@ window.form = (function() {
         this.onClose();
       }
     }
-  };
-
-  var setCookies = function() {
-    var dateNow = new Date();
-    var birthDate = new Date('1906-12-09');
-    birthDate.setFullYear(dateNow.getFullYear());
-    if (birthDate >= dateNow) {
-      birthDate.setFullYear(dateNow.getFullYear() - 1);
-    }
-    var deleteCookie = ((dateNow - birthDate) / (24 * 60 * 60 * 1000));
-    window.Cookies.set('review-mark', reviewMarkValue, {expires: deleteCookie});
-    window.Cookies.set('review-mark-index', reviewMarkIndex, {expires: deleteCookie});
-    window.Cookies.set('review-name', reviewName.value, {expires: deleteCookie});
   };
 
   formContainer.oninput = function(evt) {
