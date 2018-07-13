@@ -6,7 +6,7 @@ window.form = (function() {
   var reviesSubmitBtn = formContainer.querySelector('.review-submit');
 
   var reviewMarksAll = formContainer.querySelectorAll('input[name=review-mark]');
-  var reviewMark;//значение получаем из cookie, если оно есть.
+  var reviewMark;
 
   var reviewName = document.getElementById('review-name');
   var reviewText = document.getElementById('review-text');
@@ -39,18 +39,12 @@ window.form = (function() {
     checkValidity();
   };
 
-  reviewName.oninput = function() {
-    checkValidity();
-  };
+  reviewName.oninput = checkValidity;
 
-  reviewText.oninput = function() {
-    checkValidity();
-  };
+  reviewText.oninput = checkValidity;
 
   for(var i = 0; i < reviewMarksAll.length; i++) {
-    reviewMarksAll[i].onchange = function() {
-      checkValidity();
-    };
+    reviewMarksAll[i].onchange = checkValidity;
   }
 
   reviesSubmitBtn.onclick = function(evt) {
@@ -78,9 +72,6 @@ window.form = (function() {
     reviewName.value = window.Cookies.get('review-name') || '';
   }
 
-  /**
-   * Сохранение cookies.
-   */
   function setCookies() {
     var dateNow = new Date();
     var birthDate = new Date('1906-12-09');
