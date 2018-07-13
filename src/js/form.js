@@ -94,23 +94,26 @@ window.form = (function() {
 
     reviesSubmitBtn.disabled = !(reviewName.value && reviewMark.value > 2 || reviewName.value && reviewMark.value <= 2 && reviewText.value);
 
-    if (reviewName.value) {
-      reviewFieldsName.classList.add('invisible');
-    } else {
-      reviewFieldsName.classList.remove('invisible');
-    }
+    // if (reviewName.value) {
+    //   reviewFieldsName.classList.add('invisible');
+    // } else {
+    //   reviewFieldsName.classList.remove('invisible');
+    // }
+    reviewName.value ? reviewFieldsName.classList.add('invisible') : reviewFieldsName.classList.remove('invisible');
 
-    if (reviewText.value) {
-      reviewFieldsText.classList.add('invisible');
-    } else {
-      reviewFieldsText.classList.remove('invisible');
-    }
+    // if (reviewText.value) {
+    //   reviewFieldsText.classList.add('invisible');
+    // } else {
+    //   reviewFieldsText.classList.remove('invisible');
+    // }
+    reviewText.value ? reviewFieldsText.classList.add('invisible') : reviewFieldsText.classList.remove('invisible');
 
-    if (reviewName.value && reviewText.value) {
-      reviewFields.classList.add('invisible');
-    } else {
-      reviewFields.classList.remove('invisible');
-    }
+    // if (reviewName.value && reviewText.value) {
+    //   reviewFields.classList.add('invisible');
+    // } else {
+    //   reviewFields.classList.remove('invisible');
+    // }
+    (reviewName.value && reviewText.value) ? reviewFields.classList.add('invisible') : reviewFields.classList.remove('invisible');
   }
 
   return form;
