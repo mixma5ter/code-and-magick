@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 'use strict';
 
 var reviews = [{
@@ -146,22 +145,40 @@ var templateContainer = 'content' in template ? template.content : template;
 
 reviewsFilter.classList.add('invisible');
 
-reviews.forEach(function(reviews) {
+var IMAGE_LOAD_TIMEOUT = 10000;
+
+var getReviewElement = function(arrayIndex) {
   var reviewsItem = templateContainer.querySelector('.review').cloneNode(true);
-  reviewsItem.querySelector('.review-author').textContent = reviews.author.name;
-  reviewsItem.querySelector('.review-rating').textContent = reviews.rating;
-  reviewsItem.querySelector('.review-text').textContent = reviews.description;
+  reviewsItem.querySelector('.review-author').textContent = arrayIndex.author.name;
+  reviewsItem.querySelector('.review-rating').textContent = arrayIndex.rating;
+  reviewsItem.querySelector('.review-text').textContent = arrayIndex.description;
 
   var authorImg = new Image(124, 124);
+  var authorImgTimeout = null;
+
   authorImg.onload = function() {
-    reviewsItem.querySelector('.review-author').src = reviews.author.picture;
+    clearTimeout(authorImgTimeout);
+    reviewsItem.querySelector('.review-author').src = arrayIndex.author.picture;
   };
   authorImg.onerror = function() {
     reviewsItem.classList.add('review-load-failure');
   };
-  authorImg.src = reviews.author.picture;
 
-  container.appendChild(reviewsItem);
-});
+  authorImg.src = arrayIndex.author.picture;
+
+  authorImgTimeout = setTimeout(function() {
+    reviewsItem.classList.add('review-load-failure');
+  }, IMAGE_LOAD_TIMEOUT);
+
+  return reviewsItem;
+};
+
+var renderReviews = function(array) {
+  array.forEach(function(arrayIndex) {
+    container.appendChild(getReviewElement(arrayIndex));
+  });
+};
+
+renderReviews(reviews);
 
 reviewsFilter.classList.remove('invisible');
