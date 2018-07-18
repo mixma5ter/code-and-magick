@@ -139,10 +139,12 @@ var reviews = [{
   'description': 'Игра очень интересная. Нравится возможность выбирать между героями, а самое крутое, что есть альтернативные концовки в игре. Она точно стоит своих денег.'
 }];
 
-//var reviewsFilter = document.querySelector('.reviews-filter');
+var reviewsFilter = document.querySelector('.reviews-filter');
 var container = document.querySelector('.reviews-list');
 var template = document.getElementById('review-template');
 var templateContainer = 'content' in template ? template.content : template;
+
+reviewsFilter.classList.add('invisible');
 
 reviews.forEach(function(reviews) {
   var reviewsItem = templateContainer.querySelector('.review').cloneNode(true);
@@ -157,10 +159,9 @@ reviews.forEach(function(reviews) {
   authorImg.onerror = function() {
     reviewsItem.classList.add('review-load-failure');
   };
-  //authorImg.src = reviews.author.picture;
-  reviewsItem.querySelector('.review-author').src = reviews.author.picture;
+  authorImg.src = reviews.author.picture;
 
   container.appendChild(reviewsItem);
 });
 
-console.log(container);
+reviewsFilter.classList.remove('invisible');
