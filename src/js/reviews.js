@@ -1,7 +1,6 @@
 'use strict';
 
 var REVIEWS_LOAD_URL = 'http://localhost:1507/api/reviews';
-var reviews = [];
 
 var callbackLoad = function(url, callback, callbackName) {
   if (!callbackName) {
@@ -58,6 +57,8 @@ var renderReviews = function(array) {
   });
 };
 
-callbackLoad(REVIEWS_LOAD_URL, renderReviews(reviews));
+callbackLoad(REVIEWS_LOAD_URL, function(data) {
+  renderReviews(data);
+}, '__jsonpCallback');
 
 reviewsFilter.classList.remove('invisible');
