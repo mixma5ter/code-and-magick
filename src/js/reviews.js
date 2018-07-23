@@ -57,7 +57,7 @@ var renderReviews = function(array) {
   });
 };
 
-callbackLoad(REVIEWS_LOAD_URL, function(data) {
+module.exports = callbackLoad(REVIEWS_LOAD_URL, function(data) {
   renderReviews(data);
 }, '__jsonpCallback');
 
