@@ -21,3 +21,7 @@
     game.setDeactivated(false);
   };
 })();
+
+var message = require('./test');
+
+console.log(message);
