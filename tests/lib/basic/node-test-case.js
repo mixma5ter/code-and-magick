@@ -14,7 +14,7 @@ var NodeTestCase = module.exports = function(name, hash) {
 Object.assign(NodeTestCase.prototype, {
   run: function() {
     var testCase = this;
-    
+
     try {
       this.runAsserts(); // should be implemented in super-class
     } catch(err) {

@@ -42,10 +42,10 @@ var branchInfoIsBigger = function(thisBi, otherBi) {
 
   return (
     otherBi.module < thisBi.module ||
-      (
-        otherBi.module === thisBi.module &&
-          otherBi.task <= thisBi.task
-      )
+    (
+      otherBi.module === thisBi.module &&
+      otherBi.task <= thisBi.task
+    )
   );
 };
 
