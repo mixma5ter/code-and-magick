@@ -1,82 +1,58 @@
 'use strict';
 
-// Временно создал массив с адресами изображений.
-var pictures = ['img/screenshots/1.png', 'img/screenshots/2.png', 'img/screenshots/3.png', 'img/screenshots/4.png', 'img/screenshots/5.png', 'img/screenshots/6.png'];
+var CLASS_INVISIBLE = 'invisible';
 
-var galleryPictureArray = document.querySelectorAll('.photogallery-image img');
-
-var previewContainer = document.querySelector('.overlay-gallery');
-var closeGallery = previewContainer.querySelector('.overlay-gallery-close');
-var prevPicture = document.querySelector('.overlay-gallery-control-left');
-var nextPicture = document.querySelector('.overlay-gallery-control-right');
-var previewImageContainer = previewContainer.querySelector('.overlay-gallery-preview');
-var previewNumber = document.querySelector('.preview-number-current');
-var previewTotal = document.querySelector('.preview-number-total');
-
-var fullSizePic = document.createElement('IMG');
-
-var activePicture;
-
-previewTotal.innerHTML = galleryPictureArray.length;
-
-galleryPictureArray.forEach(function(item, i) {
-  galleryPictureArray[i].onclick = function(e) {
-    e.preventDefault();
-    activePicture = i;
-    showGallery();
-  };
-});
-
-closeGallery.onclick = function(e) {
-  e.preventDefault();
-  hideGallery();
+var Gallery = function(picturesList) {
+  this.pictures = picturesList;
+  this.activePicture = 0;
+  this.galleryContainer = document.querySelector('.overlay-gallery');
+  this.controlLeft = document.querySelector('.overlay-gallery-control-left');
+  this.controlRight = document.querySelector('.overlay-gallery-control-right');
+  this.currentPicture = document.querySelector('.preview-number-current');
+  this.totalPictures = document.querySelector('.preview-number-total');
+  this.galleryClose = document.querySelector('.overlay-gallery-close');
+  this.totalPictures.innerText = this.pictures.length;
 };
 
-document.onkeydown = function(e) {
-  if (e.keyCode === 27) {
-    e.preventDefault();
-    hideGallery();
+Gallery.prototype = {
+  show: function(pictureNum) {
+    var self = this;
+    this.galleryContainer.classList.remove(CLASS_INVISIBLE);
+    this.galleryClose.onclick = function() {
+      self.hide();
+    };
+    this.controlLeft.onclick = function() {
+      if (pictureNum > 0) {
+        pictureNum--;
+        self.setActivePicture(pictureNum);
+      }
+    };
+    this.controlRight.onclick = function() {
+      if (pictureNum < self.pictures.length - 1) {
+        pictureNum++;
+        self.setActivePicture(pictureNum);
+      }
+    };
+    this.setActivePicture(pictureNum);
+  },
+  hide: function() {
+    this.galleryContainer.classList.add(CLASS_INVISIBLE);
+    this.galleryClose.onclick = null;
+    this.controlLeft.onclick = null;
+    this.controlRight.onclick = null;
+  },
+  setActivePicture: function(pictureNum) {
+    var galleryPreview = document.querySelector('.overlay-gallery-preview');
+    this.activePicture = pictureNum;
+    var image = new Image();
+    image.src = this.pictures[pictureNum];
+    if (galleryPreview.lastElementChild.nodeName === 'IMG') {
+      galleryPreview.replaceChild(image, galleryPreview.lastElementChild);
+    } else {
+      galleryPreview.appendChild(image);
+    }
+    this.currentPicture.innerText = this.activePicture + 1;
   }
 };
 
-prevPicture.onclick = function(e) {
-  e.preventDefault();
-  if (activePicture === 0) {
-    activePicture = galleryPictureArray.length - 1;
-  } else {
-    activePicture -= 1;
-  }
-  fullSizePic.src = pictures[activePicture];
-  previewNumber.innerHTML = activePicture + 1;
-};
-
-nextPicture.onclick = function(e) {
-  e.preventDefault();
-  if (activePicture === galleryPictureArray.length - 1) {
-    activePicture = 0;
-  } else {
-    activePicture += 1;
-  }
-  fullSizePic.src = pictures[activePicture];
-  previewNumber.innerHTML = activePicture + 1;
-};
-
-var showGallery = function() {
-  previewContainer.classList.remove('invisible');
-  previewNumber.innerHTML = activePicture + 1;
-  previewRender();
-};
-
-var hideGallery = function() {
-  previewContainer.classList.add('invisible');
-  deleteRender();
-};
-
-var previewRender = function() {
-  fullSizePic.src = pictures[activePicture];
-  previewImageContainer.appendChild(fullSizePic);
-};
-
-var deleteRender = function() {
-  previewImageContainer.removeChild(fullSizePic);
-};
+module.exports = Gallery;
